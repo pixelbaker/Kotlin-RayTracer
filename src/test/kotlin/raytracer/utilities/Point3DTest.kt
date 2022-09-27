@@ -35,4 +35,12 @@ internal class Point3DTest {
         assertEquals(2.0, point.y)
         assertEquals(3.0, point.z)
     }
+
+    @Test
+    internal fun `unary operator overloading`() {
+        val point = -Point3D(1.0, 2.0, z = 3.0)
+        assertEquals(-1.0, point.x)
+        assertEquals(-2.0, point.y)
+        assertEquals(-3.0, point.z)
+    }
 }
