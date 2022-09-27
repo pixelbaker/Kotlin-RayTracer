@@ -34,26 +34,6 @@ internal class Point2DTest {
     }
 
     @Test
-    internal fun `assignment tested`() {
-        val otherPoint = Point2D(1.0, 2.0)
-        val point = Point2D(0.0)
-        val result = point.assignment(otherPoint)
-        assertEquals(1.0, point.x)
-        assertEquals(2.0, point.y)
-        assertNotEquals(otherPoint, point)
-        assertEquals(point, result)
-    }
-
-    @Test
-    internal fun `assignment to itself`() {
-        val point = Point2D(1.0, 2.0)
-        val result = point.assignment(point)
-        assertEquals(1.0, point.x)
-        assertEquals(2.0, point.y)
-        assertEquals(point, result)
-    }
-
-    @Test
     internal fun `multiplication by a float on the right`() {
         val point = Point2D(1.0, 2.0)
         val result = point * 2.0
