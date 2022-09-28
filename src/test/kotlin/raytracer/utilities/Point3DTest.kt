@@ -1,7 +1,7 @@
 package raytracer.utilities
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class Point3DTest {
     @Test
