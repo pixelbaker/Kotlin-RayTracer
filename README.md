@@ -1,6 +1,6 @@
-# Kotlin-Raytracer
+# Kotlin-RayTracer
 
-This is a self-study project. After my beloved ABAP-Raytracer, it is time to move on. I got inspired to do in Sydney/Australia 🐨 during my time at Animal Logic. Kudos to the development team there.
+This is a self-study project. After my beloved ABAP-RayTracer, it is time to move on. I got inspired to do in Sydney/Australia 🐨 during my time at Animal Logic. Kudos to the development team there.
 
 I gonna teach myself writing a ray tracer with Kotlin with the help of the book "Ray Tracing from the Ground Up" 📗 by Kevin Suffern.
 
