@@ -1,6 +1,10 @@
 package raytracer.cameras
 
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import raytracer.utilities.Point2D
+import raytracer.world.World
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -39,7 +43,7 @@ internal class PinholeTest {
 
     @Test
     internal fun `rendering 2x2 image should display 4 pixels`() {
-        /*//Given
+        //Given
         val world = mockk<World>()
         every { world.displayPixel(any(), any(), any()) }
 
@@ -49,6 +53,6 @@ internal class PinholeTest {
         cut.renderScene(world)
 
         //Then
-        verify(exactly = 4) { world.displayPixel(any(), any(), any()) }*/
+        verify(exactly = 4) { world.displayPixel(any(), any(), any()) }
     }
 }

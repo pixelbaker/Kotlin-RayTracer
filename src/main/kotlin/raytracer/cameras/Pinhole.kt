@@ -22,7 +22,7 @@ class Pinhole : Camera {
     }
 
     override fun renderScene(world: World) {
-        TODO("Not yet implemented")
+        
     }
 
     fun getDirection(p: Point2D): Vector3D {
