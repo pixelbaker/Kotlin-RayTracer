@@ -17,6 +17,9 @@ data class Vector3D(
 
     operator fun times(a: Double) = Vector3D(x * a, y * a, z * a)
 
+    /**
+     * Dot product
+     */
     operator fun times(v: Vector3D) = x * v.x + y * v.y + z * v.z
 
     operator fun div(a: Double) = Vector3D(x / a, y / a, z / a)
@@ -31,6 +34,11 @@ data class Vector3D(
 
     operator fun minus(v: Vector3D) = Vector3D(x - v.x, y - v.y, z - v.z)
 
+    /**
+     * Cross product
+     *
+     * C++ was using operator^
+     */
     operator fun rem(v: Vector3D) = Vector3D(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x)
 
     fun lengthSquared() = x * x + y * y + z * z
