@@ -1,6 +1,6 @@
 package raytracer.utilities
 
-class Ray(
+data class Ray(
     val origin: Point3D = Point3D(),
     val direction: Vector3D = Vector3D()
 ) {

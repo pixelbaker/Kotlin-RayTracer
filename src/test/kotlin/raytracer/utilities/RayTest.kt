@@ -8,12 +8,8 @@ internal class RayTest {
     @Test
     internal fun `default constructor`() {
         val ray = Ray()
-        assertEquals(0.0, ray.origin.x)
-        assertEquals(0.0, ray.origin.y)
-        assertEquals(0.0, ray.origin.z)
-        assertEquals(0.0, ray.direction.x)
-        assertEquals(0.0, ray.direction.y)
-        assertEquals(0.0, ray.direction.z)
+        assertEquals(Point3D(), ray.origin)
+        assertEquals(Vector3D(), ray.direction)
     }
 
     @Test

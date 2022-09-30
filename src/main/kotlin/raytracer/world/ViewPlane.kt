@@ -6,7 +6,6 @@ class ViewPlane(
     val pixelSize: Double = 1.0,
     val numSamples: Int = 1, // number of samples per pixel
     gamma: Double = 1.0, // gamma correction factor
-
     val showOutOfGamut: Boolean = false, //display red if RGBColor out of gamut
 ) {
     constructor(vp: ViewPlane) : this(
