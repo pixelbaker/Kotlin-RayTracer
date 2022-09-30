@@ -21,8 +21,7 @@ internal class ViewPlaneTest {
 
     @Test
     internal fun `setting gamma affect inv gamma`() {
-        val vp = ViewPlane()
-        vp.gamma = 2.0
+        val vp = ViewPlane(gamma = 2.0)
         assertEquals(.5, vp.invGamma)
     }
 }

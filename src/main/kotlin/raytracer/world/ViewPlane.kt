@@ -5,7 +5,7 @@ class ViewPlane(
     val vres: Int = 400, // vertical image resolution
     val pixelSize: Double = 1.0,
     val numSamples: Int = 1, // number of samples per pixel
-    gamma: Double = 1.0, // gamma correction factor
+    val gamma: Double = 1.0, // gamma correction factor
     val showOutOfGamut: Boolean = false, //display red if RGBColor out of gamut
 ) {
     constructor(vp: ViewPlane) : this(
@@ -17,12 +17,6 @@ class ViewPlane(
         showOutOfGamut = vp.showOutOfGamut,
     )
 
-    var gamma: Double = gamma
-        set(value) {
-            invGamma = 1.0 / value
-            field = value
-        }
-
-    var invGamma: Double = 1.0 // the inverse of the gamma correction factor
-        private set
+    val invGamma: Double // the inverse of the gamma correction factor
+        get() = 1.0 / gamma
 }
