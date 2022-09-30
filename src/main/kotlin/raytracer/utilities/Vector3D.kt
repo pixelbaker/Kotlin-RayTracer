@@ -5,8 +5,9 @@ import kotlin.math.sqrt
 class Vector3D(
     var x: Double = 0.0,
     var y: Double = 0.0,
-    var z: Double = 0.0,) {
-    constructor(a: Double): this(a, a, a)
+    var z: Double = 0.0,
+) {
+    constructor(a: Double) : this(a, a, a)
 
     constructor(v: Vector3D) : this(v.x, v.y, v.z)
 
@@ -32,9 +33,9 @@ class Vector3D(
 
     operator fun rem(v: Vector3D) = Vector3D(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x)
 
-    fun length() = sqrt(lengthSquared())
-
     fun lengthSquared() = x * x + y * y + z * z
+
+    fun length() = sqrt(lengthSquared())
 
     fun normalize() {
         val length = sqrt(x * x + y * y + z * z)
