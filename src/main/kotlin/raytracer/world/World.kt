@@ -1,9 +1,9 @@
 package raytracer.world
 
-import org.w3c.dom.css.RGBColor
+import raytracer.utilities.RGBColor
 
 class World {
-    fun displayPixel(rowSorter: Int, column: Int, pixelColor: RGBColor) {
+    fun displayPixel(row: Int, column: Int, pixelColor: RGBColor) {
 
     }
 }

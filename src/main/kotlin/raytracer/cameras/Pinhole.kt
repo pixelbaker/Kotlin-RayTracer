@@ -1,6 +1,7 @@
 package raytracer.cameras
 
 import raytracer.utilities.Point2D
+import raytracer.utilities.RGBColor
 import raytracer.utilities.Vector3D
 import raytracer.world.World
 
@@ -22,7 +23,7 @@ class Pinhole : Camera {
     }
 
     override fun renderScene(world: World) {
-        
+        world.displayPixel(1, 1, RGBColor())
     }
 
     fun getDirection(p: Point2D): Vector3D {
