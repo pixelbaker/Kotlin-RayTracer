@@ -1,8 +1,8 @@
 package raytracer.utilities
 
 data class Ray(
-    val origin: Point3D = Point3D(),
-    val direction: Vector3D = Vector3D()
+    var origin: Point3D = Point3D(),
+    var direction: Vector3D = Vector3D(),
 ) {
     constructor(ray: Ray) : this(
         Point3D(ray.origin),

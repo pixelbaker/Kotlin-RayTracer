@@ -1,8 +1,9 @@
 package raytracer.utilities
 
 data class Point2D(
-    val x: Double = 0.0,
-    val y: Double = 0.0) {
+    var x: Double = 0.0,
+    var y: Double = 0.0,
+) {
 
     constructor(arg: Double) : this(arg, arg)
 

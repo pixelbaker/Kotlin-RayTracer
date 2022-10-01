@@ -1,9 +1,9 @@
 package raytracer.cameras
 
-import raytracer.utilities.Point2D
-import raytracer.utilities.RGBColor
-import raytracer.utilities.Vector3D
+import raytracer.utilities.*
+import raytracer.world.ViewPlane
 import raytracer.world.World
+import kotlin.math.sqrt
 
 class Pinhole : Camera {
     var viewPlaneDistance: Double = 500.0
@@ -23,7 +23,35 @@ class Pinhole : Camera {
     }
 
     override fun renderScene(world: World) {
-        world.displayPixel(1, 1, RGBColor())
+        var radiance: RGBColor
+        val viewPlane = ViewPlane(world.viewPlane)
+        val ray = Ray()
+        var depth = 0
+        val samplePoint = Point2D()
+        val num: Int = sqrt(viewPlane.numSamples.toDouble()).toInt()
+
+        viewPlane.pixelSize /= zoom
+        ray.origin = Point3D(eye)
+
+        for (row in 0 until viewPlane.vres) {
+            for (column in 0 until viewPlane.hres) {
+                radiance = RGBColor(black)
+
+                for (sub_row in 0 until num) {
+                    for (sub_column in 0 until num) {
+                        samplePoint.x = viewPlane.pixelSize * (column - 0.5 * viewPlane.hres + (sub_column + .5) / num)
+                        samplePoint.y = viewPlane.pixelSize * (row - 0.5 * viewPlane.vres + (sub_row + .5) / num)
+                        ray.direction = getDirection(samplePoint)
+                        //radiance += world.tracer.trace_ray(ray, depth)
+                    }
+                }
+
+                radiance /= viewPlane.numSamples
+                radiance *= exposureTime
+
+                world.displayPixel(row, column, radiance)
+            }
+        }
     }
 
     fun getDirection(p: Point2D): Vector3D {
@@ -34,8 +62,4 @@ class Pinhole : Camera {
         direction.normalize()
         return direction
     }
-}
-
-private operator fun Double.times(vector: Vector3D): Vector3D {
-    return vector * this
 }

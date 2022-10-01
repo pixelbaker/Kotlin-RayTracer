@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import raytracer.utilities.Point2D
+import raytracer.world.ViewPlane
 import raytracer.world.World
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -46,6 +47,7 @@ internal class PinholeTest {
         //Given
         val world = mockk<World>()
         every { world.displayPixel(any(), any(), any()) } returns Unit
+        every { world.viewPlane } returns ViewPlane(vres = 2, hres = 2)
 
         val cut = Pinhole()
 
