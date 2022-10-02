@@ -3,6 +3,7 @@ package raytracer.geometries
 import org.junit.jupiter.api.Test
 import raytracer.materials.Material
 import raytracer.utilities.Ray
+import raytracer.utilities.RayParam
 import raytracer.utilities.ShadingRecord
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -14,7 +15,7 @@ internal class GeometricObjectTest {
 
             override fun clone(): GeometricObject = this
 
-            override fun hit(ray: Ray, t: Double, shadingRecord: ShadingRecord) = true
+            override fun hit(ray: Ray, tmin: RayParam, shadingRecord: ShadingRecord) = true
         }
 
         assertNull(cut.material)
@@ -32,14 +33,14 @@ internal class GeometricObjectTest {
 
             override fun clone() = this
 
-            override fun hit(ray: Ray, t: Double, shadingRecord: ShadingRecord) = true
+            override fun hit(ray: Ray, tmin: RayParam, shadingRecord: ShadingRecord) = true
         }
 
         //When
         val cut = object : GeometricObject(geometryToCopyFrom) {
             override fun clone() = this
 
-            override fun hit(ray: Ray, t: Double, shadingRecord: ShadingRecord) = true
+            override fun hit(ray: Ray, tmin: RayParam, shadingRecord: ShadingRecord) = true
         }
 
         //Then
