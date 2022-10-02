@@ -123,16 +123,16 @@ internal class Vector3DTest {
     internal fun `normalize vector`() {
         val vector = Vector3D(1.0)
         vector.normalize()
-        assertEquals(0.5773, vector.x, .1)
-        assertEquals(0.5773, vector.y, .1)
-        assertEquals(0.5773, vector.z, .1)
+        assertEquals(0.5773, vector.x, .0001)
+        assertEquals(0.5773, vector.y, .0001)
+        assertEquals(0.5773, vector.z, .0001)
     }
 
     @Test
     internal fun `return a unit vector, and normalize the vector`() {
         val vector = Vector3D(1.0).hat()
-        assertEquals(0.5773, vector.x, .1)
-        assertEquals(0.5773, vector.y, .1)
-        assertEquals(0.5773, vector.z, .1)
+        assertEquals(0.5773, vector.x, .0001)
+        assertEquals(0.5773, vector.y, .0001)
+        assertEquals(0.5773, vector.z, .0001)
     }
 }
