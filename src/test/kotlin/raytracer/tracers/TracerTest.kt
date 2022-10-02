@@ -5,16 +5,17 @@ import raytracer.utilities.black
 import raytracer.world.World
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertIs
+import kotlin.test.assertSame
 
 internal class TracerTest {
     @Test
     internal fun `default constructor`() {
-        val cut = object : Tracer(World()) {
+        val world = World()
+        val cut = object : Tracer(world) {
             val worldd: World
                 get() = super.world
         }
-        assertIs<World>(cut.worldd)
+        assertSame(world, cut.worldd)
     }
 
     @Test
