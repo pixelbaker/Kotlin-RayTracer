@@ -16,9 +16,11 @@ class World {
 
     //var ambient: Light? = null
     var camera: Camera? = null
-    val sphere = Sphere()
+    var sphere = Sphere(radius = 85.0)
     private val objects = emptyList<GeometricObject>().toMutableList()
+
     //val lights: List<Light> = emptyList()
+    private var pixels: MutableMap<Int, String> = mutableMapOf()
 
     fun add(obj: GeometricObject) {
         objects.add(obj)
@@ -34,7 +36,8 @@ class World {
         val ray = Ray(direction = Vector3D(.0, .0, -1.0))
 
         for (row in 0 until vres) {
-            for (column in 0 until hres) {
+            for (column in 0..hres) {
+                // This uses orthographic viewing along the zw axis
                 val x = pixelSize * (column - hres / 2.0 + 0.5)
                 val y = pixelSize * (row - vres / 2.0 + 0.5)
                 ray.origin = Point3D(x, y, depth)
@@ -43,6 +46,9 @@ class World {
 
                 displayPixel(row, column, pixelColor)
             }
+        }
+        for (row in pixels) {
+            println(row)
         }
     }
 
@@ -92,7 +98,7 @@ class World {
         val g = (mappedColor.g * 255).toInt()
         val b = (mappedColor.b * 255).toInt()
 
-        println("$row, $column, $r, $g, $b")
+        pixels[y] = pixels.withDefault { "" }[y] + if (r > 0) "o" else " "
     }
 
     fun maxToOne(color: RGBColor): RGBColor {
