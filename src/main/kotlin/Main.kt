@@ -7,11 +7,17 @@ import java.io.File
 import java.io.IOException
 import java.nio.file.Paths
 import javax.imageio.ImageIO
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
+@OptIn(ExperimentalTime::class)
 fun main() {
     val world = World()
     world.build(singleSphereScene)
-    world.renderScene()
+
+    measureTime { world.renderScene() }
+        .also { println("Render Time: ${it.toDouble(DurationUnit.SECONDS)} sec") }
 
     saveImage(world.imageResult)
 }
