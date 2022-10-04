@@ -1,11 +1,11 @@
 package raytracer.world
 
 class ViewPlane(
-    val hres: Int = 400, // horizontal image resolution
-    val vres: Int = 400, // vertical image resolution
+    var hres: Int = 400, // horizontal image resolution
+    var vres: Int = 400, // vertical image resolution
     var pixelSize: Double = 1.0,
     val numSamples: Int = 1, // number of samples per pixel
-    val gamma: Double = 1.0, // gamma correction factor
+    var gamma: Double = 1.0, // gamma correction factor
     val showOutOfGamut: Boolean = false, //display red if RGBColor out of gamut
 ) {
     constructor(vp: ViewPlane) : this(

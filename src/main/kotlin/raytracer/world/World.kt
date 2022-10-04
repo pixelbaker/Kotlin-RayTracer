@@ -5,7 +5,13 @@ import raytracer.geometries.GeometricObject
 import raytracer.geometries.Sphere
 import raytracer.tracers.Tracer
 import raytracer.utilities.*
+import java.awt.Color
+import java.awt.image.BufferedImage
+import java.awt.image.BufferedImage.TYPE_INT_RGB
 import kotlin.math.max
+
+
+typealias BuildScript = (World) -> Unit
 
 private const val kHugeValue = 1.0E10
 
@@ -16,17 +22,20 @@ class World {
 
     //var ambient: Light? = null
     var camera: Camera? = null
-    var sphere = Sphere(radius = 85.0)
+    var sphere = Sphere()
     private val objects = emptyList<GeometricObject>().toMutableList()
 
     //val lights: List<Light> = emptyList()
-    private var pixels: MutableMap<Int, String> = mutableMapOf()
+    var imageResult: BufferedImage? = null
 
     fun add(obj: GeometricObject) {
         objects.add(obj)
     }
 
-    fun build() {}
+    fun build(buildScript: BuildScript) {
+        buildScript(this)
+        imageResult = BufferedImage(viewPlane.hres, viewPlane.vres, TYPE_INT_RGB)
+    }
 
     fun renderScene() {
         val depth = 100.0
@@ -36,7 +45,7 @@ class World {
         val ray = Ray(direction = Vector3D(.0, .0, -1.0))
 
         for (row in 0 until vres) {
-            for (column in 0..hres) {
+            for (column in 0 until hres) {
                 // This uses orthographic viewing along the zw axis
                 val x = pixelSize * (column - hres / 2.0 + 0.5)
                 val y = pixelSize * (row - vres / 2.0 + 0.5)
@@ -46,9 +55,6 @@ class World {
 
                 displayPixel(row, column, pixelColor)
             }
-        }
-        for (row in pixels) {
-            println(row)
         }
     }
 
@@ -98,7 +104,7 @@ class World {
         val g = (mappedColor.g * 255).toInt()
         val b = (mappedColor.b * 255).toInt()
 
-        pixels[y] = pixels.withDefault { "" }[y] + if (r > 0) "o" else " "
+        imageResult?.setRGB(x, y, Color(r, g, b).rgb)
     }
 
     fun maxToOne(color: RGBColor): RGBColor {

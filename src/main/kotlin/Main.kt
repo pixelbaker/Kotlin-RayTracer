@@ -1,8 +1,41 @@
+import raytracer.geometries.Sphere
 import raytracer.tracers.SingleSphere
+import raytracer.world.BuildScript
 import raytracer.world.World
+import java.awt.image.BufferedImage
+import java.io.File
+import java.io.IOException
+import java.nio.file.Paths
+import javax.imageio.ImageIO
 
-fun main(args: Array<String>) {
+fun main() {
     val world = World()
-    world.tracer = SingleSphere(world)
+    world.build(singleSphereScene)
     world.renderScene()
+
+    saveImage(world.imageResult)
+}
+
+private var singleSphereScene: BuildScript = {
+    with(it) {
+        viewPlane.hres = 200
+        viewPlane.vres = 200
+        viewPlane.gamma = 1.0
+
+        tracer = SingleSphere(this)
+        sphere = Sphere(radius = 80.0)
+    }
+}
+
+private fun saveImage(image: BufferedImage?) {
+    try {
+        val path = Paths.get("", "render.png")
+            .toAbsolutePath()
+            .toString()
+            .also { println(it) }
+        val file = File(path)
+        ImageIO.write(image, "png", file)
+    } catch (e: IOException) {
+        println(e)
+    }
 }
