@@ -19,7 +19,7 @@ fun main() {
     measureTime { world.renderScene() }
         .also { println("Render Time: ${it.toDouble(DurationUnit.SECONDS)} sec") }
 
-    saveImage(world.imageResult)
+    saveImage(world.image)
 }
 
 private var singleSphereScene: BuildScript = {

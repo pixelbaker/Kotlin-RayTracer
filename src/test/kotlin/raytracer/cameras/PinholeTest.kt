@@ -46,7 +46,7 @@ internal class PinholeTest {
     internal fun `rendering 2x2 image should display 4 pixels`() {
         //Given
         val world = mockk<World>()
-        every { world.displayPixel(any(), any(), any()) } returns Unit
+        every { world.drawPixel(any(), any(), any()) } returns Unit
         every { world.viewPlane } returns ViewPlane(vres = 2, hres = 2)
 
         val cut = Pinhole()
@@ -55,6 +55,6 @@ internal class PinholeTest {
         cut.renderScene(world)
 
         //Then
-        verify(exactly = 4) { world.displayPixel(any(), any(), any()) }
+        verify(exactly = 4) { world.drawPixel(any(), any(), any()) }
     }
 }

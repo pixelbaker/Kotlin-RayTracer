@@ -49,7 +49,7 @@ class Pinhole : Camera {
                 radiance /= viewPlane.numSamples
                 radiance *= exposureTime
 
-                world.displayPixel(row, column, radiance)
+                world.drawPixel(row, column, radiance)
             }
         }
     }
