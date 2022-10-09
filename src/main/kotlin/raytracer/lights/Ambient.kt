@@ -8,7 +8,10 @@ class Ambient(
     val radianceScale: Double = 1.0,
     val color: RGBColor = RGBColor(1.0),
 ) : Light() {
-    constructor(ambient: Ambient) : this(radianceScale = ambient.radianceScale, color = ambient.color)
+    constructor(ambient: Ambient) : this(
+        radianceScale = ambient.radianceScale,
+        color = RGBColor(ambient.color)
+    )
 
     override fun getDirection(shadingRecord: ShadingRecord) = Vector3D(0.0)
 

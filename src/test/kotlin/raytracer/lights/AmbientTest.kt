@@ -22,6 +22,7 @@ internal class AmbientTest {
         val cut = Ambient(ambientToCopyFrom)
         assertEquals(RGBColor(0.5), cut.color)
         assertEquals(2.0, cut.radianceScale)
+        assertNotSame(ambientToCopyFrom.color, cut.color)
     }
 
     @Test
