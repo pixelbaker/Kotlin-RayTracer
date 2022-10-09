@@ -13,9 +13,9 @@ class Ambient(
         color = RGBColor(ambient.color)
     )
 
-    override fun getDirection(shadingRecord: ShadingRecord) = Vector3D(0.0)
-
     override fun clone() = Ambient(this)
+
+    override fun getDirection(shadingRecord: ShadingRecord) = Vector3D(0.0)
 
     override fun getRadiance(shadingRecord: ShadingRecord) = color * radianceScale
 }
