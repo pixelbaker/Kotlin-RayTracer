@@ -77,6 +77,23 @@ class World {
         image.setRGB(x, y, Color(r, g, b).rgb)
     }
 
+    fun hitBareBonesObjects(ray: Ray): ShadingRecord {
+        val t = RayParam()
+        var tmin = kHugeValue
+        val shadingRecord = ShadingRecord(this)
+
+        for (obj in objects) {
+            val hit = obj.hit(ray, t, shadingRecord)
+            if (hit && t.t < tmin) {
+                shadingRecord.hitAnObject = true
+                tmin = t.t
+                shadingRecord.color = RGBColor(obj.color)
+            }
+        }
+
+        return shadingRecord
+    }
+
     fun hitObjects(ray: Ray): ShadingRecord {
         val shadingRecord = ShadingRecord(this)
         val t = RayParam()
