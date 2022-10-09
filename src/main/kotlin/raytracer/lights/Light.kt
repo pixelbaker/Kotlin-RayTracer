@@ -6,9 +6,11 @@ import raytracer.utilities.Vector3D
 import raytracer.utilities.black
 
 abstract class Light {
-    fun radiance(shadingRecord: ShadingRecord): RGBColor {
+    open fun getRadiance(shadingRecord: ShadingRecord): RGBColor {
         return RGBColor(black)
     }
 
     abstract fun getDirection(shadingRecord: ShadingRecord): Vector3D
+
+    abstract fun clone(): Light
 }

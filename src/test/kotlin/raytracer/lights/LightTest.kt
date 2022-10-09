@@ -11,11 +11,10 @@ internal class LightTest {
     @Test
     internal fun `default radiance implementation returns black`() {
         val cut = object : Light() {
-            override fun getDirection(shadingRecord: ShadingRecord): Vector3D {
-                return Vector3D()
-            }
+            override fun getDirection(shadingRecord: ShadingRecord) = Vector3D()
+            override fun clone() = this
         }
-        val color = cut.radiance(ShadingRecord(World()))
+        val color = cut.getRadiance(ShadingRecord(World()))
         assertEquals(black, color)
     }
 }
