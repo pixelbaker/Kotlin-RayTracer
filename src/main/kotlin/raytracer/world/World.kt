@@ -20,18 +20,14 @@ class World {
     val viewPlane: ViewPlane = ViewPlane()
     val backgroundColor = RGBColor(black)
     var tracer: Tracer? = null
-
-    var ambient: Light = Ambient()
     var camera: Camera? = null
+    var ambient: Light = Ambient()
+    val lights = emptyList<Light>().toMutableList()
+    val objects = emptyList<GeometricObject>().toMutableList()
+
     var sphere = Sphere()
-    private val objects = emptyList<GeometricObject>().toMutableList()
 
-    //val lights: List<Light> = emptyList()
     var image = BufferedImage(viewPlane.hres, viewPlane.vres, TYPE_INT_RGB)
-
-    fun add(obj: GeometricObject) {
-        objects.add(obj)
-    }
 
     fun build(buildScript: BuildScript) {
         buildScript(this)
