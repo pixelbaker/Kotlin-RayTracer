@@ -8,7 +8,6 @@ import raytracer.utilities.*
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_INT_RGB
-import kotlin.math.max
 
 
 typealias BuildScript = (World) -> Unit
@@ -60,9 +59,9 @@ class World {
 
     fun drawPixel(row: Int, column: Int, raw: RGBColor) {
         var mappedColor = if (viewPlane.showOutOfGamut)
-            clampToColor(raw)
+            raw.clampToColor()
         else
-            maxToOne(raw)
+            raw.maxToOne()
 
         mappedColor = if (viewPlane.gamma != 1.0)
             mappedColor.powc(viewPlane.invGamma)
@@ -78,15 +77,6 @@ class World {
         val b = (mappedColor.b * 255).toInt()
 
         image.setRGB(x, y, Color(r, g, b).rgb)
-    }
-
-    fun maxToOne(color: RGBColor): RGBColor {
-        val maxValue = max(color.r, max(color.g, color.b))
-        return if (maxValue > 1.0) (color / maxValue) else color
-    }
-
-    fun clampToColor(raw: RGBColor): RGBColor {
-        return if (raw.r > 1.0 || raw.g > 1.0 || raw.b > 1.0) RGBColor(red) else raw
     }
 
     fun hitObjects(ray: Ray): ShadingRecord {

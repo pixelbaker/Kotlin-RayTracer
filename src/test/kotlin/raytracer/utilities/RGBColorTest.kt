@@ -1,8 +1,6 @@
 package raytracer.utilities
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 internal class RGBColorTest {
     @Test
@@ -73,6 +71,15 @@ internal class RGBColorTest {
     }
 
     @Test
+    internal fun `compound division by an Integer`() {
+        val result = RGBColor(3.0)
+        result /= 3
+        assertEquals(1.0, result.r)
+        assertEquals(1.0, result.g)
+        assertEquals(1.0, result.b)
+    }
+
+    @Test
     internal fun `component-wise multiplication of two colors`() {
         val color = RGBColor(2.0) * RGBColor(2.0)
         assertEquals(4.0, color.r)
@@ -96,5 +103,37 @@ internal class RGBColorTest {
         assertEquals(4.0, color.r)
         assertEquals(4.0, color.g)
         assertEquals(4.0, color.b)
+    }
+
+    @Test
+    internal fun `no value is above 1 so no maxing to 1 needed`() {
+        val cut = RGBColor(1.0)
+        val result = cut.maxToOne()
+        assertSame(cut, result)
+        assertEquals(RGBColor(1.0), result)
+    }
+
+    @Test
+    internal fun `one value is above 1 all values will be evenily scaled down until 1 is reached`() {
+        val cut = RGBColor(2.0, 1.0, 0.5)
+        val result = cut.maxToOne()
+        assertNotSame(cut, result)
+        assertEquals(RGBColor(1.0, .5, .25), result)
+    }
+
+    @Test
+    internal fun `no value is above 1 so no clamping to red needed`() {
+        val cut = RGBColor(1.0)
+        val result = cut.clampToColor()
+        assertSame(cut, result)
+        assertEquals(RGBColor(1.0), result)
+    }
+
+    @Test
+    internal fun `one value is above 1, red will be returned`() {
+        val cut = RGBColor(2.0, 1.0, 0.5)
+        val result = cut.clampToColor()
+        assertNotSame(cut, result)
+        assertEquals(red, result)
     }
 }

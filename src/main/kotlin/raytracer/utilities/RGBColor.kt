@@ -1,5 +1,6 @@
 package raytracer.utilities
 
+import kotlin.math.max
 import kotlin.math.pow
 
 val black = RGBColor(0.0)
@@ -11,6 +12,8 @@ data class RGBColor(
     var g: Double = 0.0,
     var b: Double = 0.0,
 ) {
+    private val maxValue
+        get() = max(r, max(g, b))
 
     constructor(a: Double) : this(a, a, a)
 
@@ -43,4 +46,12 @@ data class RGBColor(
     fun average() = (1.0 / 3.0) * (r + g + b)
 
     fun powc(p: Double) = RGBColor(r.pow(p), g.pow(p), b.pow(p))
+
+    fun maxToOne(): RGBColor {
+        return if (maxValue > 1.0) (this / maxValue) else this
+    }
+
+    fun clampToColor(): RGBColor {
+        return if (maxValue > 1.0) RGBColor(red) else this
+    }
 }
