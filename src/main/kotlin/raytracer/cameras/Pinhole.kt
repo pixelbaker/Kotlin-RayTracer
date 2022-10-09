@@ -23,7 +23,6 @@ class Pinhole : Camera {
     }
 
     override fun renderScene(world: World) {
-        var radiance: RGBColor
         val viewPlane = ViewPlane(world.viewPlane)
         val ray = Ray()
         var depth = 0
@@ -35,14 +34,14 @@ class Pinhole : Camera {
 
         for (row in 0 until viewPlane.vres) {
             for (column in 0 until viewPlane.hres) {
-                radiance = RGBColor(black)
+                val radiance = RGBColor(black)
 
                 for (sub_row in 0 until num) {
                     for (sub_column in 0 until num) {
                         samplePoint.x = viewPlane.pixelSize * (column - 0.5 * viewPlane.hres + (sub_column + .5) / num)
                         samplePoint.y = viewPlane.pixelSize * (row - 0.5 * viewPlane.vres + (sub_row + .5) / num)
                         ray.direction = getDirection(samplePoint)
-                        //radiance += world.tracer.trace_ray(ray, depth)
+                        radiance += world.tracer?.trace(ray, depth)!!
                     }
                 }
 

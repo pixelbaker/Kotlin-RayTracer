@@ -54,6 +54,15 @@ internal class RGBColorTest {
     }
 
     @Test
+    internal fun `multiplication by a double`() {
+        val color = RGBColor(1.0)
+        val result = color * 3.0
+        assertEquals(3.0, result.r)
+        assertEquals(3.0, result.g)
+        assertEquals(3.0, result.b)
+    }
+
+    @Test
     internal fun `division by float`() {
         val color = RGBColor(3.0) / 3.0
         assertEquals(1.0, color.r)

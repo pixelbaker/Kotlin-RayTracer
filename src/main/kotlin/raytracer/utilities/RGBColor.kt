@@ -43,6 +43,8 @@ data class RGBColor(
 
     operator fun times(c: RGBColor) = RGBColor(r * c.r, g * c.g, b * c.b)
 
+    operator fun times(scale: Double) = RGBColor(r * scale, g * scale, b * scale)
+
     fun average() = (1.0 / 3.0) * (r + g + b)
 
     fun powc(p: Double) = RGBColor(r.pow(p), g.pow(p), b.pow(p))
