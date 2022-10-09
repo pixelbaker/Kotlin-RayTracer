@@ -1,6 +1,3 @@
-import raytracer.geometries.Sphere
-import raytracer.tracers.SingleSphere
-import raytracer.world.BuildScript
 import raytracer.world.World
 import java.awt.image.BufferedImage
 import java.io.File
@@ -14,24 +11,15 @@ import kotlin.time.measureTime
 @OptIn(ExperimentalTime::class)
 fun main() {
     val world = World()
-    world.build(singleSphereScene)
+    world.build(pinholeScene)
 
-    measureTime { world.renderScene() }
+    //measureTime { world.renderScene() }
+    measureTime { world.camera?.renderScene(world) }
         .also { println("Render Time: ${it.toDouble(DurationUnit.SECONDS)} sec") }
 
     saveImage(world.image)
 }
 
-private var singleSphereScene: BuildScript = {
-    with(it) {
-        viewPlane.hres = 200
-        viewPlane.vres = 200
-        viewPlane.gamma = 1.0
-
-        tracer = SingleSphere(this)
-        sphere = Sphere(radius = 80.0)
-    }
-}
 
 private fun saveImage(image: BufferedImage?) {
     try {

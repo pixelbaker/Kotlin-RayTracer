@@ -14,13 +14,13 @@ internal class MultipleObjectsTest {
         val world = mockk<World>()
         val shadingRecord = ShadingRecord(world)
         shadingRecord.hitAnObject = false
-        every { world.hitObjects(any()) } returns shadingRecord
+        every { world.hitBareBonesObjects(any()) } returns shadingRecord
         every { world.backgroundColor } returns RGBColor(black)
 
         val cut = MultipleObjects(world)
 
         //When
-        val result = cut.trace(Ray())
+        val result = cut.trace(Ray(), 0)
 
         //Then
         assertEquals(black, result)
