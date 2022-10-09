@@ -3,6 +3,8 @@ package raytracer.world
 import raytracer.cameras.Camera
 import raytracer.geometries.GeometricObject
 import raytracer.geometries.Sphere
+import raytracer.lights.Ambient
+import raytracer.lights.Light
 import raytracer.tracers.Tracer
 import raytracer.utilities.*
 import java.awt.Color
@@ -19,7 +21,7 @@ class World {
     val backgroundColor = RGBColor(black)
     var tracer: Tracer? = null
 
-    //var ambient: Light? = null
+    var ambient: Light = Ambient()
     var camera: Camera? = null
     var sphere = Sphere()
     private val objects = emptyList<GeometricObject>().toMutableList()
