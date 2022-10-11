@@ -32,7 +32,7 @@ internal class CameraTest {
 
     @Test
     internal fun `copy constructor`() {
-        val cameraToCopyFrom = with(TestCamera()) {
+        val cameraToCopyFrom = TestCamera().apply {
             eye = Point3D(1.0)
             lookat = Point3D(2.0)
             rollAngle = 1.0
@@ -41,7 +41,6 @@ internal class CameraTest {
             w = Vector3D(5.0)
             up = Vector3D(6.0)
             exposureTime = 2.0
-            this
         }
 
         val cut = TestCamera(cameraToCopyFrom)

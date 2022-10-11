@@ -15,20 +15,14 @@ val pinholeScene: BuildScript = {
 
         tracer = MultipleObjects(this)
 
-        camera = with(Pinhole()) {
-            eye = Point3D(0.0, 0.0, 500.0)
-            this
-        }
+        camera = Pinhole().apply { eye = Point3D(0.0, 0.0, 500.0) }
 
         objects.add(
-            Sphere(radius = 50.0, center = Point3D(-45.0, 45.0, 40.0))
-                .also { it.color = RGBColor(red) })
+            Sphere(Point3D(-45.0, 45.0, 40.0), 50.0).apply { color = RGBColor(red) })
         objects.add(
-            Sphere(radius = 40.0, center = Point3D(20.0, 0.0, 0.0))
-                .also { it.color = RGBColor(1.0, 1.0, 0.0) })
+            Sphere(Point3D(20.0, 0.0, 0.0), 40.0).apply { color = RGBColor(1.0, 1.0, 0.0) })
         objects.add(
-            Sphere(radius = 110.0, center = Point3D(80.0, -30.0, -65.0))
-                .also { it.color = RGBColor(white) })
+            Sphere(Point3D(80.0, -30.0, -65.0), 110.0).apply { color = RGBColor(white) })
     }
 }
 
