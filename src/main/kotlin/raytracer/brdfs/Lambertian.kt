@@ -8,8 +8,8 @@ import raytracer.utilities.Vector3D
 const val invPI: Double = 0.3183098861837906715
 
 class Lambertian(
-    val kd: Double = 0.0,
-    val cd: RGBColor = RGBColor(0.0),
+    var kd: Double = 0.0,
+    var cd: RGBColor = RGBColor(0.0),
 ) : BRDF() {
     constructor(lambertian: Lambertian) : this(kd = lambertian.kd, cd = RGBColor(lambertian.cd))
 
