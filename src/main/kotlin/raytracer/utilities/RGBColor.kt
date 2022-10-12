@@ -7,7 +7,7 @@ val black = { RGBColor(0.0) }
 val white = { RGBColor(1.0) }
 val red = { RGBColor(1.0, 0.0, 0.0) }
 val green = { RGBColor(0.0, 1.0, 0.0) }
-val blue = { RGBColor(0.0, 0.0, 1.0) }
+
 
 data class RGBColor(
     var r: Double = 0.0,

@@ -75,8 +75,8 @@ internal class CameraTest {
     @Test
     internal fun `camera looking vertically up`() {
         val cut = TestCamera()
-        cut.eye = Point3D(0.0, 0.0, 0.0)
-        cut.lookat = Point3D(0.0, 1.0, 0.0)
+        cut.eye = Point3D(0.0, -1.0, 0.0)
+        cut.lookat = Point3D(0.0, 0.0, 0.0)
 
         cut.compute_uvw()
 
@@ -99,6 +99,21 @@ internal class CameraTest {
             assertEquals(Vector3D(-1.0, 0.0, 0.0), u)
             assertEquals(Vector3D(0.0, 1.0, 0.0), v)
             assertEquals(Vector3D(0.0, 0.0, -1.0), w)
+        }
+    }
+
+    @Test
+    internal fun `compute uvw2`() {
+        val cut = TestCamera()
+        cut.eye = Point3D(0.0, 0.0, 0.0)
+        cut.lookat = Point3D(1.0, 0.0, 0.0)
+
+        cut.compute_uvw()
+
+        with(cut) {
+            assertEquals(Vector3D(0.0, -0.0, 1.0), u)
+            assertEquals(Vector3D(0.0, 1.0, 0.0), v)
+            assertEquals(Vector3D(-1.0, 0.0, 0.0), w)
         }
     }
 }
