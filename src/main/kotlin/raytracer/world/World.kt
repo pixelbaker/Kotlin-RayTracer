@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage.TYPE_INT_RGB
 typealias BuildScript = (World) -> Unit
 
 class World {
+    lateinit var image: BufferedImage
     lateinit var tracer: Tracer
     lateinit var camera: Camera
     val viewPlane: ViewPlane = ViewPlane()
@@ -23,14 +24,16 @@ class World {
     val lights = emptyList<Light>().toMutableList()
     val objects = emptyList<GeometricObject>().toMutableList()
 
-    lateinit var image: BufferedImage
-
     fun build(buildScript: BuildScript) {
         buildScript(this)
         image = BufferedImage(viewPlane.hres, viewPlane.vres, TYPE_INT_RGB)
     }
 
+    /**
+     * @param raw is the pixel color computed by the ray tracer its RGB floating point components can be arbitrarily large
+     */
     fun drawPixel(row: Int, column: Int, raw: RGBColor) {
+        // mapped_color has all components in the range [0, 1], but still floating point
         var mappedColor = if (viewPlane.showOutOfGamut)
             raw.clampToColor()
         else
@@ -45,6 +48,8 @@ class World {
         val x = column
         val y = viewPlane.vres - row - 1
 
+
+        // display color has integer components for computer display in the range [0, 255]
         val r = (mappedColor.r * 255).toInt()
         val g = (mappedColor.g * 255).toInt()
         val b = (mappedColor.b * 255).toInt()

@@ -27,7 +27,9 @@ class Pinhole : Camera {
         val ray = Ray()
         var depth = 0
         val samplePoint = Point2D()
-        val num: Int = sqrt(viewPlane.numSamples.toDouble()).toInt()
+
+        //this goes away when the sampler works
+        val numSamples: Int = sqrt(viewPlane.numSamples.toDouble()).toInt()
 
         viewPlane.pixelSize /= zoom
         ray.origin = Point3D(eye)
@@ -36,10 +38,14 @@ class Pinhole : Camera {
             for (column in 0 until viewPlane.hres) {
                 val radiance = black()
 
-                for (sub_row in 0 until num) {
-                    for (sub_column in 0 until num) {
-                        samplePoint.x = viewPlane.pixelSize * (column - 0.5 * viewPlane.hres + (sub_column + .5) / num)
-                        samplePoint.y = viewPlane.pixelSize * (row - 0.5 * viewPlane.vres + (sub_row + .5) / num)
+                // the two for loops are replaced by one for loop over the number of samples
+                // the sampler will provide the sample point and replace (sub_column + .5) / num etc.
+                for (sub_row in 0 until numSamples) {
+                    for (sub_column in 0 until numSamples) {
+
+                        samplePoint.x =
+                            viewPlane.pixelSize * (column - 0.5 * viewPlane.hres + (sub_column + .5) / numSamples)
+                        samplePoint.y = viewPlane.pixelSize * (row - 0.5 * viewPlane.vres + (sub_row + .5) / numSamples)
                         ray.direction = getDirection(samplePoint)
                         radiance += world.tracer.trace(ray, depth)
                     }
