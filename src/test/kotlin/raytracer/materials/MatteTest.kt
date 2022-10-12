@@ -45,7 +45,7 @@ internal class MatteTest {
     internal fun `shade only with ambient light`() {
         //Given
         val cut = Matte().apply {
-            setCd(RGBColor(red))
+            setCd(red())
             setKa(1.0)
         }
 
@@ -53,14 +53,14 @@ internal class MatteTest {
         val result = cut.shade(ShadingRecord(World()))
 
         //Then
-        assertEquals(RGBColor(red), result)
+        assertEquals(red(), result)
     }
 
     @Test
     internal fun `shade with one additional ambient light`() {
         //Given
         val cut = Matte().apply {
-            setCd(RGBColor(red))
+            setCd(red())
             setKa(1.0)
         }
 
@@ -70,6 +70,6 @@ internal class MatteTest {
         val result = cut.shade(ShadingRecord(world))
 
         //Then
-        assertEquals(RGBColor(red), result)
+        assertEquals(red(), result)
     }
 }

@@ -23,9 +23,8 @@ val pinholeScene: BuildScript = {
         )
 
         objects.add(
-            //Sphere(Point3D(-40.0, 40.0, 40.0), 50.0).apply { color = RGBColor(red) })
             Sphere(Point3D(0.0, 0.0, 5.0), 50.0).apply {
-                material = Matte().apply { setKd(2.0); setKa(.1); setCd(RGBColor(red)) }
+                material = Matte().apply { setKd(2.0); setKa(.1); setCd(red()) }
             })
         val yellowMatte = Matte().apply { setKd(2.0); setKa(.1); setCd(RGBColor(1.0, 1.0, 0.0)) }
         val yellowSphere = Sphere(Point3D(50.0, 0.0, 0.0), 40.0).apply { material = yellowMatte }

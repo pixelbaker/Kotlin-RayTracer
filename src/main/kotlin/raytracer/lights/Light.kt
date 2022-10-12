@@ -7,7 +7,7 @@ import raytracer.utilities.black
 
 abstract class Light {
     open fun getRadiance(shadingRecord: ShadingRecord): RGBColor {
-        return RGBColor(black)
+        return black()
     }
 
     abstract fun getDirection(shadingRecord: ShadingRecord): Vector3D

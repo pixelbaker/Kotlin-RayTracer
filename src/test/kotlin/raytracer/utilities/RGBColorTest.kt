@@ -143,6 +143,6 @@ internal class RGBColorTest {
         val cut = RGBColor(2.0, 1.0, 0.5)
         val result = cut.clampToColor()
         assertNotSame(cut, result)
-        assertEquals(red, result)
+        assertEquals(red(), result)
     }
 }

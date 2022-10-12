@@ -3,9 +3,9 @@ package raytracer.utilities
 import kotlin.math.max
 import kotlin.math.pow
 
-val black = RGBColor(0.0)
-val white = RGBColor(1.0)
-val red = RGBColor(1.0, .0, .0)
+val black = { RGBColor(0.0) }
+val white = { RGBColor(1.0) }
+val red = { RGBColor(1.0, .0, .0) }
 
 data class RGBColor(
     var r: Double = 0.0,
@@ -54,6 +54,6 @@ data class RGBColor(
     }
 
     fun clampToColor(): RGBColor {
-        return if (maxValue > 1.0) RGBColor(red) else this
+        return if (maxValue > 1.0) red() else this
     }
 }

@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test
 import raytracer.lights.Ambient
 import raytracer.lights.Light
 import raytracer.materials.Matte
-import raytracer.utilities.*
+import raytracer.utilities.Ray
+import raytracer.utilities.ShadingRecord
+import raytracer.utilities.black
+import raytracer.utilities.red
 import raytracer.world.World
 import kotlin.test.assertEquals
 
@@ -18,7 +21,7 @@ internal class MultipleObjectsTest {
         val shadingRecord = ShadingRecord(world)
         shadingRecord.hitAnObject = false
         every { world.hitObjects(any()) } returns shadingRecord
-        every { world.backgroundColor } returns RGBColor(black)
+        every { world.backgroundColor } returns black()
 
         val cut = MultipleObjects(world)
 
@@ -26,7 +29,7 @@ internal class MultipleObjectsTest {
         val result = cut.trace(Ray(), 0)
 
         //Then
-        assertEquals(black, result)
+        assertEquals(black(), result)
     }
 
     @Test
@@ -35,7 +38,7 @@ internal class MultipleObjectsTest {
         val world = mockk<World>()
         val shadingRecord = ShadingRecord(world)
         shadingRecord.hitAnObject = true
-        shadingRecord.material = Matte().apply { setKa(1.0); setCd(RGBColor(red)) }
+        shadingRecord.material = Matte().apply { setKa(1.0); setCd(red()) }
         every { world.hitObjects(any()) } returns shadingRecord
         every { world.ambient } returns Ambient()
         every { world.lights } returns mutableListOf<Light>()
@@ -46,6 +49,6 @@ internal class MultipleObjectsTest {
         val result = cut.trace(Ray(), 0)
 
         //Then
-        assertEquals(red, result)
+        assertEquals(red(), result)
     }
 }

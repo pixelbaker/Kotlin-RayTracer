@@ -34,7 +34,7 @@ class Pinhole : Camera {
 
         for (row in 0 until viewPlane.vres) {
             for (column in 0 until viewPlane.hres) {
-                val radiance = RGBColor(black)
+                val radiance = black()
 
                 for (sub_row in 0 until num) {
                     for (sub_column in 0 until num) {

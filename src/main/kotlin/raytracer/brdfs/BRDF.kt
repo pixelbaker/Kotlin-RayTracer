@@ -7,8 +7,8 @@ import raytracer.utilities.black
 
 abstract class BRDF {
     abstract fun clone(): BRDF
-    open fun f(shadingRecord: ShadingRecord, wo: Vector3D, wi: Vector3D): RGBColor = RGBColor(black)
-    open fun sample_f(shadingRecord: ShadingRecord, wo: Vector3D, wi: Vector3D): RGBColor = RGBColor(black)
-    open fun sample_f(shadingRecord: ShadingRecord, wo: Vector3D, wi: Vector3D, pdf: Double): RGBColor = RGBColor(black)
-    open fun rho(shadingRecord: ShadingRecord, wo: Vector3D): RGBColor = RGBColor(black)
+    open fun f(shadingRecord: ShadingRecord, wo: Vector3D, wi: Vector3D): RGBColor = black()
+    open fun sample_f(shadingRecord: ShadingRecord, wo: Vector3D, wi: Vector3D): RGBColor = black()
+    open fun sample_f(shadingRecord: ShadingRecord, wo: Vector3D, wi: Vector3D, pdf: Double): RGBColor = black()
+    open fun rho(shadingRecord: ShadingRecord, wo: Vector3D): RGBColor = black()
 }

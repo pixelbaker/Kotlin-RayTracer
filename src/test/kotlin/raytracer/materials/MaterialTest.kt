@@ -20,6 +20,6 @@ internal class MaterialTest {
         val result = cut.shade(shadingRecord)
 
         //Then
-        assertEquals(black, result)
+        assertEquals(black(), result)
     }
 }

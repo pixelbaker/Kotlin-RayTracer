@@ -17,7 +17,7 @@ internal class WorldTest {
     internal fun `2x2 pixel scene must set color of 4 pixels`() {
         //Given
         val tracer = mockk<Tracer>()
-        every { tracer.trace(any()) }.returns(RGBColor(black))
+        every { tracer.trace(any()) } returns black()
 
         val cut = World()
         cut.viewPlane.vres = 2

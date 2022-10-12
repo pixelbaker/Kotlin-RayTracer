@@ -15,6 +15,6 @@ internal class LightTest {
             override fun clone() = this
         }
         val color = cut.getRadiance(ShadingRecord(World()))
-        assertEquals(black, color)
+        assertEquals(black(), color)
     }
 }

@@ -6,20 +6,8 @@ import raytracer.utilities.Ray
 import raytracer.utilities.RayParam
 import raytracer.utilities.ShadingRecord
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 internal class GeometricObjectTest {
-    @Test
-    internal fun `default constructor`() {
-        val cut = object : GeometricObject() {
-
-            override fun clone(): GeometricObject = this
-
-            override fun hit(ray: Ray, tmin: RayParam, shadingRecord: ShadingRecord) = true
-        }
-
-        assertNull(cut.material)
-    }
 
     @Test
     internal fun `copy constructor`() {
