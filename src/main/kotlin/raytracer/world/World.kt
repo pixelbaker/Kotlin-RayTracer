@@ -16,15 +16,16 @@ typealias BuildScript = (World) -> Unit
 private const val kHugeValue = 1.0E10
 
 class World {
+    lateinit var tracer: Tracer
+    lateinit var camera: Camera
     val viewPlane: ViewPlane = ViewPlane()
     val backgroundColor = RGBColor(black)
-    var tracer: Tracer? = null
-    var camera: Camera? = null
     var ambient: Light = Ambient()
+
     val lights = emptyList<Light>().toMutableList()
     val objects = emptyList<GeometricObject>().toMutableList()
 
-    var image = BufferedImage(viewPlane.hres, viewPlane.vres, TYPE_INT_RGB)
+    lateinit var image: BufferedImage
 
     fun build(buildScript: BuildScript) {
         buildScript(this)

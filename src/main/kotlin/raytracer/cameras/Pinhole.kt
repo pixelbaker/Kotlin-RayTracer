@@ -41,7 +41,7 @@ class Pinhole : Camera {
                         samplePoint.x = viewPlane.pixelSize * (column - 0.5 * viewPlane.hres + (sub_column + .5) / num)
                         samplePoint.y = viewPlane.pixelSize * (row - 0.5 * viewPlane.vres + (sub_row + .5) / num)
                         ray.direction = getDirection(samplePoint)
-                        radiance += world.tracer?.trace(ray, depth)!!
+                        radiance += world.tracer.trace(ray, depth)
                     }
                 }
 

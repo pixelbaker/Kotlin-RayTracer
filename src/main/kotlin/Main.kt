@@ -13,7 +13,7 @@ fun main() {
     val world = World()
     world.build(pinholeScene)
 
-    measureTime { world.camera?.renderScene(world) }
+    measureTime { world.camera.renderScene(world) }
         .also { println("Render Time: ${it.toDouble(DurationUnit.SECONDS)} sec") }
 
     saveImage(world.image)
