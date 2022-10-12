@@ -1,9 +1,9 @@
 package raytracer.materials
 
+import raytracer.brdfs.invPI
 import raytracer.lights.Ambient
-import raytracer.utilities.RGBColor
-import raytracer.utilities.ShadingRecord
-import raytracer.utilities.red
+import raytracer.lights.Directional
+import raytracer.utilities.*
 import raytracer.world.World
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -57,19 +57,57 @@ internal class MatteTest {
     }
 
     @Test
-    internal fun `shade with one additional ambient light`() {
+    internal fun `shade with one additional directional light, which triggers diffuse calculation`() {
         //Given
         val cut = Matte().apply {
-            setCd(red())
-            setKa(1.0)
+            setCd(white())
+            setKa(0.5)
+            setKd(1.0)
         }
 
-        val world = World().apply { lights.add(Ambient(color = RGBColor(0.0, 1.0, 0.0))) }
+        val lightDirection = Vector3D(0.0, 1.0, 0.0)
+        val world = World()
+            .apply {
+                ambient = Ambient(0.5, red())
+                lights.add(Directional(1.0, green(), lightDirection))
+            }
+
+        val shadingRecord = ShadingRecord(world).apply {
+            ray = Ray(Point3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, 1.0))
+            normal = Normal(lightDirection)
+        }
 
         //When
-        val result = cut.shade(ShadingRecord(world))
+        val result = cut.shade(shadingRecord)
 
         //Then
-        assertEquals(red(), result)
+        assertEquals(RGBColor(.25, invPI, 0.0), result)
+    }
+
+    @Test
+    internal fun `shade with one additional directional light, without diffuse calculation`() {
+        //Given
+        val cut = Matte().apply {
+            setCd(white())
+            setKa(0.5)
+            setKd(1.0)
+        }
+        
+        val world = World()
+            .apply {
+                ambient = Ambient(0.5, red())
+                lights.add(Directional(1.0, green(), Vector3D(0.0, 0.0, -1.0)))
+            }
+
+        val shadingRecord = ShadingRecord(world).apply {
+            ray = Ray(Point3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, 1.0))
+            normal = Normal(Vector3D(0.0, 0.0, 1.0))
+        }
+
+        //When
+        val result = cut.shade(shadingRecord)
+
+        //Then
+        assertEquals(RGBColor(.25, 0.0, 0.0), result)
     }
 }

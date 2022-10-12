@@ -1,13 +1,29 @@
 import raytracer.cameras.Pinhole
 import raytracer.geometries.Sphere
+import raytracer.lights.Ambient
 import raytracer.lights.Directional
 import raytracer.materials.Matte
 import raytracer.tracers.MultipleObjects
-import raytracer.utilities.Point3D
-import raytracer.utilities.RGBColor
-import raytracer.utilities.Vector3D
-import raytracer.utilities.red
+import raytracer.utilities.*
 import raytracer.world.BuildScript
+
+val testScene: BuildScript = {
+    with(it) {
+        viewPlane.hres = 100
+        viewPlane.vres = 100
+        tracer = MultipleObjects(this)
+        camera = Pinhole().apply { eye = Point3D(0.0, 0.0, 100.0) }
+
+        ambient = Ambient(0.333, red())
+
+        lights.add(Directional(1.0, green(), Vector3D(0.0, 0.0, -1.0)))
+
+        objects.add(
+            Sphere(Point3D(0.0, 0.0, 0.0), 10.0).apply {
+                material = Matte().apply { setKd(1.0); setKa(0.25); setCd(white()) }
+            })
+    }
+}
 
 val pinholeScene: BuildScript = {
     with(it) {
@@ -16,7 +32,7 @@ val pinholeScene: BuildScript = {
 
         tracer = MultipleObjects(this)
 
-        camera = Pinhole().apply { eye = Point3D(0.0, 0.0, 500.0) }
+        camera = Pinhole().apply { eye = Point3D(0.0, 0.0, 400.0) }
 
         lights.add(
             Directional(direction = Vector3D(0.0, 1.0, 1.0))

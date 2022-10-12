@@ -11,7 +11,7 @@ import kotlin.time.measureTime
 @OptIn(ExperimentalTime::class)
 fun main() {
     val world = World()
-    world.build(pinholeScene)
+    world.build(testScene)
 
     measureTime { world.camera.renderScene(world) }
         .also { println("Render Time: ${it.toDouble(DurationUnit.SECONDS)} sec") }

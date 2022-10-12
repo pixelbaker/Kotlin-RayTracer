@@ -19,7 +19,7 @@ class World {
     lateinit var tracer: Tracer
     lateinit var camera: Camera
     val viewPlane: ViewPlane = ViewPlane()
-    val backgroundColor = black()
+    var backgroundColor = black()
     var ambient: Light = Ambient()
 
     val lights = emptyList<Light>().toMutableList()

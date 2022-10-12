@@ -11,6 +11,7 @@ class Lambertian(
     var kd: Double = 0.0,
     var cd: RGBColor = RGBColor(0.0),
 ) : BRDF() {
+    
     constructor(lambertian: Lambertian) : this(kd = lambertian.kd, cd = RGBColor(lambertian.cd))
 
     override fun clone() = Lambertian(this)

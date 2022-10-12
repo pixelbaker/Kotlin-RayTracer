@@ -44,8 +44,8 @@ class Matte(
 
             if (ndotwi > 0.0) {
                 val f = diffuse.f(shadingRecord, wo, wi)
-                val l = light.getRadiance(shadingRecord)
-                radiance += f * l * ndotwi
+                val lightRadiance = light.getRadiance(shadingRecord)
+                radiance += f * lightRadiance * ndotwi
             }
         }
 
