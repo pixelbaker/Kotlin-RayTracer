@@ -13,7 +13,7 @@ import raytracer.utilities.red
 import raytracer.world.World
 import kotlin.test.assertEquals
 
-internal class MultipleObjectsTest {
+internal class RayCastTest {
     @Test
     internal fun `no object hit, background color returned`() {
         //Given
@@ -23,7 +23,7 @@ internal class MultipleObjectsTest {
         every { world.hitObjects(any()) } returns shadingRecord
         every { world.backgroundColor } returns black()
 
-        val cut = MultipleObjects(world)
+        val cut = RayCast(world)
 
         //When
         val result = cut.trace(Ray(), 0)
@@ -43,7 +43,7 @@ internal class MultipleObjectsTest {
         every { world.ambient } returns Ambient()
         every { world.lights } returns mutableListOf<Light>()
 
-        val cut = MultipleObjects(world)
+        val cut = RayCast(world)
 
         //When
         val result = cut.trace(Ray(), 0)

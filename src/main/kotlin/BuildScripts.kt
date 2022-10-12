@@ -3,7 +3,7 @@ import raytracer.geometries.Sphere
 import raytracer.lights.Ambient
 import raytracer.lights.Directional
 import raytracer.materials.Matte
-import raytracer.tracers.MultipleObjects
+import raytracer.tracers.RayCast
 import raytracer.utilities.*
 import raytracer.world.BuildScript
 
@@ -11,7 +11,7 @@ val testScene: BuildScript = {
     with(it) {
         viewPlane.hres = 100
         viewPlane.vres = 100
-        tracer = MultipleObjects(this)
+        tracer = RayCast(this)
         camera = Pinhole().apply { eye = Point3D(0.0, 0.0, 100.0) }
 
         ambient = Ambient(0.333, red())
@@ -30,7 +30,7 @@ val pinholeScene: BuildScript = {
         viewPlane.hres = 300
         viewPlane.vres = 300
 
-        tracer = MultipleObjects(this)
+        tracer = RayCast(this)
 
         camera = Pinhole().apply { eye = Point3D(0.0, 0.0, 400.0) }
 

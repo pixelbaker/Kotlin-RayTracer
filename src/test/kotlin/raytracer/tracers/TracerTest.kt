@@ -19,14 +19,7 @@ internal class TracerTest {
     }
 
     @Test
-    internal fun `trace1 returns black as default`() {
-        val cut = object : Tracer(World()) {}
-        val result = cut.trace(Ray())
-        assertEquals(black(), result)
-    }
-
-    @Test
-    internal fun `trace2 returns black as default`() {
+    internal fun `trace returns black as default`() {
         val cut = object : Tracer(World()) {}
         val result = cut.trace(Ray(), 0)
         assertEquals(black(), result)
