@@ -6,7 +6,6 @@ import raytracer.world.World
 
 class MultipleObjects(world: World) : Tracer(world) {
     override fun trace(ray: Ray, depth: Int): RGBColor {
-        //val shadingRecord = world.hitBareBonesObjects(ray)
         val shadingRecord = world.hitObjects(ray)
 
         return if (shadingRecord.hitAnObject) {

@@ -3,7 +3,6 @@ import raytracer.geometries.Sphere
 import raytracer.lights.Directional
 import raytracer.materials.Matte
 import raytracer.tracers.MultipleObjects
-import raytracer.tracers.SingleSphere
 import raytracer.utilities.Point3D
 import raytracer.utilities.RGBColor
 import raytracer.utilities.Vector3D
@@ -25,7 +24,7 @@ val pinholeScene: BuildScript = {
 
         objects.add(
             //Sphere(Point3D(-40.0, 40.0, 40.0), 50.0).apply { color = RGBColor(red) })
-            Sphere(Point3D(0.0, 0.0, 0.0), 50.0).apply {
+            Sphere(Point3D(0.0, 0.0, 5.0), 50.0).apply {
                 material = Matte().apply { setKd(2.0); setKa(.1); setCd(RGBColor(red)) }
             })
         val yellowMatte = Matte().apply { setKd(2.0); setKa(.1); setCd(RGBColor(1.0, 1.0, 0.0)) }
@@ -38,16 +37,5 @@ val pinholeScene: BuildScript = {
         objects.add(yellowSphere.clone().apply { center = Point3D(40.0, -40.0, 0.0) })
         objects.add(yellowSphere.clone().apply { center = Point3D(-40.0, 40.0, 0.0) })
         objects.add(yellowSphere.clone().apply { center = Point3D(40.0, 40.0, 0.0) })
-    }
-}
-
-val singleSphereScene: BuildScript = {
-    with(it) {
-        viewPlane.hres = 200
-        viewPlane.vres = 200
-        viewPlane.gamma = 1.0
-
-        tracer = SingleSphere(this)
-        sphere = Sphere(radius = 80.0)
     }
 }
