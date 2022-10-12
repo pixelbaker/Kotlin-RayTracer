@@ -1,47 +1,87 @@
 package raytracer.world
 
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
-import raytracer.tracers.Tracer
-import raytracer.utilities.RGBColor
-import raytracer.utilities.black
+import raytracer.geometries.Sphere
+import raytracer.materials.Matte
+import raytracer.utilities.*
 import java.awt.Color
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class WorldTest {
     @Test
-    @Ignore
-    internal fun `2x2 pixel scene must set color of 4 pixels`() {
+    internal fun `A scene with no objects, will result in a boring Shading Record`() {
         //Given
-        val tracer = mockk<Tracer>()
-        every { tracer.trace(any()) } returns black()
-
         val cut = World()
-        cut.viewPlane.vres = 2
-        cut.viewPlane.hres = 2
-        cut.tracer = tracer
-        cut.build {}
 
         //When
-        //cut.renderScene()
+        val result = cut.hitObjects(Ray())
 
         //Then
-        verify(exactly = 4) { tracer.trace(any()) }
-        for (row in 0..1) {
-            for (column in 0..1) {
-                val rgbInt = cut.image.getRGB(row, column)
-                assertBlack(Color(rgbInt, false))
-            }
-        }
+        assertEquals(ShadingRecord(cut), result)
     }
 
-    private fun assertBlack(c: Color) {
-        assertEquals(c.red, 0)
-        assertEquals(c.green, 0)
-        assertEquals(c.blue, 0)
+    @Test
+    internal fun `A scene with one object, and a Ray that misses`() {
+        //Given
+        val cut = World().apply {
+            objects.add(Sphere())
+        }
+
+        //When
+        val result = cut.hitObjects(Ray())
+
+        //Then
+        assertEquals(false, result.hitAnObject)
+        assertEquals(ShadingRecord(cut), result)
+    }
+
+    @Test
+    internal fun `A scene with one object, and a Ray hits it`() {
+        //Given
+        val matte = Matte()
+        val cut = World().apply {
+            objects.add(Sphere(radius = 2.0).apply { material = matte })
+        }
+
+        //When
+        val result = cut.hitObjects(Ray(Point3D(0.0, 0.0, 4.0), Vector3D(0.0, 0.0, -1.0)))
+
+        //Then
+        val expected = ShadingRecord(
+            world = cut,
+            hitAnObject = true,
+            material = matte,
+            hitPoint = Point3D(x = 0.0, y = 0.0, z = 2.0),
+            localHitPoint = Point3D(x = 0.0, y = 0.0, z = 2.0),
+            normal = Normal(x = 0.0, y = 0.0, z = 1.0),
+            t = 2.0
+        )
+        assertEquals(expected, result)
+    }
+
+    @Test
+    internal fun `A scene with two objects, and a Ray hits both`() {
+        //Given
+        val matte = Matte()
+        val cut = World().apply {
+            objects.add(Sphere(radius = 2.0).apply { material = matte })
+            objects.add(Sphere(radius = 1.0).apply { material = matte })
+        }
+
+        //When
+        val result = cut.hitObjects(Ray(Point3D(0.0, 0.0, 4.0), Vector3D(0.0, 0.0, -1.0)))
+
+        //Then
+        val expected = ShadingRecord(
+            world = cut,
+            hitAnObject = true,
+            material = matte,
+            hitPoint = Point3D(x = 0.0, y = 0.0, z = 2.0),
+            localHitPoint = Point3D(x = 0.0, y = 0.0, z = 2.0),
+            normal = Normal(x = 0.0, y = 0.0, z = 1.0),
+            t = 2.0
+        )
+        assertEquals(expected, result)
     }
 
     private fun assertRed(c: Color) {

@@ -13,8 +13,6 @@ import java.awt.image.BufferedImage.TYPE_INT_RGB
 
 typealias BuildScript = (World) -> Unit
 
-private const val kHugeValue = 1.0E10
-
 class World {
     lateinit var tracer: Tracer
     lateinit var camera: Camera
@@ -59,7 +57,7 @@ class World {
         val t = RayParam()
         var normal = Normal()
         var localHitPoint = Point3D()
-        var tmin = kHugeValue
+        var tmin = Double.MAX_VALUE
 
         for (obj in objects) {
             if (obj.hit(ray, t, shadingRecord) && (t.t < tmin)) {
