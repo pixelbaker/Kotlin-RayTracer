@@ -3,6 +3,7 @@ import raytracer.geometries.Sphere
 import raytracer.lights.Ambient
 import raytracer.lights.Directional
 import raytracer.materials.Matte
+import raytracer.samplers.Regular
 import raytracer.tracers.RayCast
 import raytracer.utilities.*
 import raytracer.world.BuildScript
@@ -29,6 +30,8 @@ val pinholeScene: BuildScript = {
     with(it) {
         viewPlane.hres = 300
         viewPlane.vres = 300
+        viewPlane.sampler = Regular(16)
+        viewPlane.numSamples = 16
 
         tracer = RayCast(this)
 

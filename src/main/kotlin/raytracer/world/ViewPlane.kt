@@ -1,5 +1,6 @@
 package raytracer.world
 
+import raytracer.samplers.Regular
 import raytracer.samplers.Sampler
 
 class ViewPlane(
@@ -47,5 +48,5 @@ class ViewPlane(
     val invGamma: Double
         get() = 1.0 / gamma
 
-    var sampler: Sampler? = null
+    var sampler: Sampler = Regular(numSamples)
 }

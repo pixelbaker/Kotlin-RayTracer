@@ -3,7 +3,6 @@ package raytracer.cameras
 import raytracer.utilities.*
 import raytracer.world.ViewPlane
 import raytracer.world.World
-import kotlin.math.sqrt
 
 class Pinhole : Camera {
     var viewPlaneDistance: Double = 500.0
@@ -26,10 +25,7 @@ class Pinhole : Camera {
         val viewPlane = ViewPlane(world.viewPlane)
         val ray = Ray()
         var depth = 0
-        val samplePoint = Point2D()
-
-        //this goes away when the sampler works
-        val numSamples: Int = sqrt(viewPlane.numSamples.toDouble()).toInt()
+        val pixelPoint = Point2D()
 
         viewPlane.pixelSize /= zoom
         ray.origin = Point3D(eye)
@@ -38,17 +34,13 @@ class Pinhole : Camera {
             for (column in 0 until viewPlane.hres) {
                 val radiance = black()
 
-                // the two for loops are replaced by one for loop over the number of samples
-                // the sampler will provide the sample point and replace (sub_column + .5) / num etc.
-                for (sub_row in 0 until numSamples) {
-                    for (sub_column in 0 until numSamples) {
+                repeat(viewPlane.numSamples) {
+                    val samplePoint = viewPlane.sampler.sampleUnitSquare()
 
-                        samplePoint.x =
-                            viewPlane.pixelSize * (column - 0.5 * viewPlane.hres + (sub_column + .5) / numSamples)
-                        samplePoint.y = viewPlane.pixelSize * (row - 0.5 * viewPlane.vres + (sub_row + .5) / numSamples)
-                        ray.direction = getDirection(samplePoint)
-                        radiance += world.tracer.trace(ray, depth)
-                    }
+                    pixelPoint.x = viewPlane.pixelSize * (column - 0.5 * viewPlane.hres + samplePoint.x)
+                    pixelPoint.y = viewPlane.pixelSize * (row - 0.5 * viewPlane.vres + samplePoint.y)
+                    ray.direction = getDirection(pixelPoint)
+                    radiance += world.tracer.trace(ray, depth)
                 }
 
                 radiance /= viewPlane.numSamples

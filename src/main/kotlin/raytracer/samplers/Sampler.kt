@@ -15,7 +15,7 @@ abstract class Sampler {
         setupShuffledIndices()
     }
 
-    constructor(numSamples: Int, numSets: Int) {
+    constructor(numSamples: Int = 1, numSets: Int = 83) {
         this.numSamples = numSamples
         this.numSets = numSets
         setupShuffledIndices()
