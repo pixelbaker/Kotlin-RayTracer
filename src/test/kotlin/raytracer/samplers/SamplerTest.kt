@@ -16,6 +16,8 @@ internal class SamplerTest {
 
         constructor(s: TestSampler) : super(s)
 
+        override fun clone(): Sampler = this
+
         override fun generateSamples() {
             for (set in 1..numSets) {
                 for (sample in 1..numSamples) {
@@ -23,12 +25,6 @@ internal class SamplerTest {
                 }
             }
         }
-
-        val _numSamples: Int
-            get() = super.numSamples
-
-        val _numSets: Int
-            get() = super.numSets
 
         val _shuffledIndices: IntArray
             get() = super.shuffledIndices
@@ -44,9 +40,9 @@ internal class SamplerTest {
         val cut = TestSampler(samplerToCopyFrom)
 
         assertNotSame(samplerToCopyFrom, cut)
-        
-        assertEquals(samplerToCopyFrom._numSets, cut._numSets)
-        assertEquals(samplerToCopyFrom._numSamples, cut._numSamples)
+
+        assertEquals(samplerToCopyFrom.numSets, cut.numSets)
+        assertEquals(samplerToCopyFrom.numSamples, cut.numSamples)
 
         assertNotSame(samplerToCopyFrom._shuffledIndices, cut._shuffledIndices)
         assertNotEquals(samplerToCopyFrom._shuffledIndices, cut._shuffledIndices)
