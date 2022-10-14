@@ -39,11 +39,13 @@ abstract class Sampler {
      * the number of sample points in a set
      */
     var numSamples: Int = 1
+        private set
 
     /**
      * the number of sample sets
      */
     var numSets: Int = 83
+        private set
 
     /**
      * sample points on a unit square

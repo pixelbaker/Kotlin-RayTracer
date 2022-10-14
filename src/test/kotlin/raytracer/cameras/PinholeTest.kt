@@ -48,7 +48,7 @@ internal class PinholeTest() {
         //Given
         val world = mockk<World>()
         every { world.drawPixel(any(), any(), any()) } returns Unit
-        every { world.viewPlane } returns ViewPlane(vres = 2, hres = 2)
+        every { world.viewPlane } returns ViewPlane().apply { vres = 2; hres = 2 }
         every { world.tracer } returns object : Tracer(world) {}
 
         val cut = Pinhole()
