@@ -103,4 +103,35 @@ internal class SamplerTest {
         assertEquals(sampleOne, sampleTwo)
         assertEquals(Point2D(1.0, 1.0), sampleTwo)
     }
+
+    @Test
+    internal fun `shuffleXCoordinates really only shuffles X`() {
+        //Given
+        val cut = object : Sampler(numSets = 1, numSamples = 10) {
+            override fun clone() = this
+
+            override fun generateSamples() {
+                repeat(numSamples) {
+                    samples.add(Point2D(it.toDouble(), it.toDouble()))
+                }
+            }
+
+            fun _shuffleXCoordinates() = shuffleXCoordinates()
+        }
+
+        cut.generateSamples()
+
+        //When
+        cut._shuffleXCoordinates()
+
+        //Then
+        val xCoordinates = (1..10)
+            .map { cut.sampleUnitSquare() }
+            .sortedBy { it.y }
+            .map { it.x }
+
+        val orderBeforeShuffling = listOf(0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)
+        assertFalse(orderBeforeShuffling == xCoordinates, "asending order has not been shuffled")
+        assertEquals(orderBeforeShuffling.toSet(), xCoordinates.toSet(), "Numbers are missing")
+    }
 }
