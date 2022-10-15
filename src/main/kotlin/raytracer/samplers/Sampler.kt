@@ -105,9 +105,9 @@ abstract class Sampler {
     /**
      * shuffle the y coordinates of the points within each set
      */
-    private fun shuffleYCoordinates() {
+    protected fun shuffleYCoordinates() {
         for (p in 0 until numSets) {
-            for (i in 0 until numSamples) {
+            for (i in 0 until numSamples - 1) {
                 val targetIndex = Random.nextInt(0, Int.MAX_VALUE) % numSamples + p * numSamples
                 val tempIndex = i + p * numSamples + 1
                 val temp: Double = samples[tempIndex].y

@@ -104,21 +104,24 @@ internal class SamplerTest {
         assertEquals(Point2D(1.0, 1.0), sampleTwo)
     }
 
-    @Test
-    internal fun `shuffleXCoordinates really only shuffles X`() {
-        //Given
-        val cut = object : Sampler(numSets = 1, numSamples = 10) {
-            override fun clone() = this
 
-            override fun generateSamples() {
-                repeat(numSamples) {
-                    samples.add(Point2D(it.toDouble(), it.toDouble()))
-                }
+    class ShuffleSampler : Sampler(numSets = 1, numSamples = 10) {
+        override fun clone() = this
+
+        override fun generateSamples() {
+            repeat(numSamples) {
+                samples.add(Point2D(it.toDouble(), it.toDouble()))
             }
-
-            fun _shuffleXCoordinates() = shuffleXCoordinates()
         }
 
+        fun _shuffleXCoordinates() = shuffleXCoordinates()
+        fun _shuffleYCoordinates() = shuffleYCoordinates()
+    }
+
+    @Test
+    internal fun `shuffle only X coordinates`() {
+        //Given
+        val cut = ShuffleSampler()
         cut.generateSamples()
 
         //When
@@ -133,5 +136,25 @@ internal class SamplerTest {
         val orderBeforeShuffling = listOf(0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)
         assertFalse(orderBeforeShuffling == xCoordinates, "asending order has not been shuffled")
         assertEquals(orderBeforeShuffling.toSet(), xCoordinates.toSet(), "Numbers are missing")
+    }
+
+    @Test
+    internal fun `shuffle only y coordinates`() {
+        //Given
+        val cut = ShuffleSampler()
+        cut.generateSamples()
+
+        //When
+        cut._shuffleYCoordinates()
+
+        //Then
+        val yCoordinates = (1..10)
+            .map { cut.sampleUnitSquare() }
+            .sortedBy { it.x }
+            .map { it.y }
+
+        val orderBeforeShuffling = listOf(0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)
+        assertFalse(orderBeforeShuffling == yCoordinates, "asending order has not been shuffled")
+        assertEquals(orderBeforeShuffling.toSet(), yCoordinates.toSet(), "Numbers are missing")
     }
 }
