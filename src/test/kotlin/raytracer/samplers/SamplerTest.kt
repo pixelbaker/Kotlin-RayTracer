@@ -53,6 +53,32 @@ internal class SamplerTest {
         assertSame(samplerToCopyFrom._samples[0], cut._samples[0])
     }
 
+
+    @Test
+    internal fun `sample first set only and get samples in order of generation`() {
+        //Given
+        val cut = TestSetSampler(numSamples = 4, numSets = 2)
+
+        cut.generateSamples()
+
+        //When
+        val samples = (1..8).map { cut.sampleOneSet() }
+
+        //Then
+        val expected = listOf(
+            Point2D(1.0, 1.0),
+            Point2D(1.0, 2.0),
+            Point2D(1.0, 3.0),
+            Point2D(1.0, 4.0),
+            Point2D(1.0, 1.0),
+            Point2D(1.0, 2.0),
+            Point2D(1.0, 3.0),
+            Point2D(1.0, 4.0),
+        )
+        assertEquals(expected, samples)
+    }
+
+
     @Test
     internal fun `sample a unit square with default numSamples and numSets`() {
         //Given
