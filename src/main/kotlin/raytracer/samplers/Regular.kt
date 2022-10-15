@@ -9,7 +9,7 @@ class Regular : Sampler {
         generateSamples()
     }
 
-    constructor(numSamples: Int) : super(numSamples = numSamples) {
+    constructor(numSamples: Int = 1) : super(numSamples = numSamples) {
         generateSamples()
     }
 
