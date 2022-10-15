@@ -185,7 +185,7 @@ abstract class Sampler {
      * Maps the 2D sample points to 3D points on a unit sphere with a uniform density distribution over the surface.
      * This is used for modelling a spherical light
      */
-    private fun mapSamplesToSphere() {
+    protected fun mapSamplesToSphere() {
         for (j in 0 until numSamples * numSets) {
             val r1 = samples[j].x
             val r2 = samples[j].y

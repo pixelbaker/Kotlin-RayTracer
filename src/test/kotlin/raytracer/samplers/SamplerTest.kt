@@ -181,6 +181,7 @@ internal class SamplerTest {
 
         fun _mapSamplesToUnitDisk() = mapSamplesToUnitDisk()
         fun _mapSamplesToHemisphere(exp: Double) = mapSamplesToHemisphere(exp)
+        fun _mapSamplesToSphere() = mapSamplesToSphere()
     }
 
     @Test
@@ -232,6 +233,33 @@ internal class SamplerTest {
             Point3D(x = 0.3535533905932738, y = 0.6123724356957945, z = 0.7071067811865476),
             Point3D(x = 0.45643546458763856, y = 0.7905694150420949, z = 0.40824829046386296),
             Point3D(x = 0.45643546458763856, y = -0.7905694150420949, z = 0.40824829046386296),
+        )
+        assertEquals(expected.size, samples.size)
+        expected.forEach { assertContains(samples, it) }
+    }
+
+    @Test
+    internal fun `map samples to sphere`() {
+        //Given
+        val cut = UnitDiskSampler()
+        cut.generateSamples()
+
+        //When
+        cut._mapSamplesToSphere()
+
+        //Then
+        val samples = (1..cut.numSamples).map { cut.sampleSphere() }
+
+        val expected = listOf(
+            Point3D(x = -1.0, y = 1.2246467991473532E-16, z = 0.0),
+            Point3D(x = -0.7453559924999298, y = 9.127978304403376E-17, z = 0.6666666666666667),
+            Point3D(x = -0.7453559924999298, y = 9.127978304403376E-17, z = -0.6666666666666667),
+            Point3D(x = 0.37267799624996495, y = -0.6454972243679027, z = 0.6666666666666667),
+            Point3D(x = 0.37267799624996495, y = -0.6454972243679027, z = -0.6666666666666667),
+            Point3D(x = 0.37267799624996495, y = 0.6454972243679027, z = 0.6666666666666667),
+            Point3D(x = 0.37267799624996495, y = 0.6454972243679027, z = -0.6666666666666667),
+            Point3D(x = 0.5000000000000001, y = 0.8660254037844386, z = 0.0),
+            Point3D(x = 0.5000000000000001, y = -0.8660254037844386, z = 0.0),
         )
         assertEquals(expected.size, samples.size)
         expected.forEach { assertContains(samples, it) }
