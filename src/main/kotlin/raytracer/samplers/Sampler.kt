@@ -120,7 +120,7 @@ abstract class Sampler {
     /**
      * Maps the 2D sample points in the square [-1,1] X [-1,1] to a unit disk, using Peter Shirley's concentric map function
      */
-    private fun mapSamplesToUnitDisk() {
+    protected fun mapSamplesToUnitDisk() {
         // polar coordinates
         var r: Double
         var phi: Double

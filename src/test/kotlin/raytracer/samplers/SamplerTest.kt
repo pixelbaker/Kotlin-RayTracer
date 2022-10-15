@@ -104,8 +104,9 @@ internal class SamplerTest {
         assertEquals(Point2D(1.0, 1.0), sampleTwo)
     }
 
+    class ShuffleSampler :
+        Sampler(numSamples = 10, numSets = 1) {
 
-    class ShuffleSampler : Sampler(numSets = 1, numSamples = 10) {
         override fun clone() = this
 
         override fun generateSamples() {
@@ -156,5 +157,53 @@ internal class SamplerTest {
         val orderBeforeShuffling = listOf(0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0)
         assertFalse(orderBeforeShuffling == yCoordinates, "asending order has not been shuffled")
         assertEquals(orderBeforeShuffling.toSet(), yCoordinates.toSet(), "Numbers are missing")
+    }
+
+    class UnitDiskSampler : Sampler(numSamples = 10, numSets = 1) {
+
+        override fun clone() = this
+
+        override fun generateSamples() {
+            samples.add(Point2D(-.5, 0.5))
+            samples.add(Point2D(0.5, 0.5))
+            samples.add(Point2D(-.5, -.5))
+            samples.add(Point2D(0.5, -.5))
+            samples.add(Point2D(-1.0, 1.0))
+            samples.add(Point2D(1.0, 1.0))
+            samples.add(Point2D(-1.0, -1.0))
+            samples.add(Point2D(1.0, -1.0))
+            samples.add(Point2D(0.0, 0.0))
+            samples.add(Point2D(1.0, 0.5))
+        }
+
+        fun _mapSamplesToUnitDisk() = mapSamplesToUnitDisk()
+    }
+
+    @Test
+    internal fun `map samples to unit disk`() {
+        //Given
+        val cut = UnitDiskSampler()
+        cut.generateSamples()
+
+        //When
+        cut._mapSamplesToUnitDisk()
+
+        //Then
+        val samples = (1..cut.numSamples).map { cut.sampleUnitDisk() }
+
+        val expected = listOf(
+            Point2D(x = -2.8977774788672046, y = 0.7764571353075631),
+            Point2D(x = -2.0, y = 2.4492935982947064E-16),
+            Point2D(x = -0.7764571353075609, y = 2.897777478867205),
+            Point2D(x = 0.0, y = 0.0),
+            Point2D(x = 0.7071067811865476, y = 0.7071067811865475),
+            Point2D(x = 0.7071067811865477, y = 0.7071067811865475),
+            Point2D(x = 1.0, y = 0.0),
+            Point2D(x = 1.4142135623730954, y = 1.414213562373095),
+            Point2D(x = 2.121320343559643, y = 2.1213203435596424),
+            Point2D(x = 3.6739403974420594E-16, y = 2.0),
+        )
+        assertEquals(expected.size, samples.size)
+        expected.forEach { assertContains(samples, it) }
     }
 }
