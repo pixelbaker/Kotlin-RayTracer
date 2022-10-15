@@ -6,7 +6,7 @@ import kotlin.test.*
 
 internal class SamplerTest {
 
-    class TestSampler : Sampler {
+    class TestSetSampler : Sampler {
         constructor(
             numSamples: Int = 1,
             numSets: Int = 83,
@@ -15,7 +15,7 @@ internal class SamplerTest {
             numSets = numSets,
         )
 
-        constructor(s: TestSampler) : super(s)
+        constructor(s: TestSetSampler) : super(s)
 
         override fun clone(): Sampler = this
 
@@ -37,8 +37,8 @@ internal class SamplerTest {
 
     @Test
     internal fun `copy constructor`() {
-        val samplerToCopyFrom = TestSampler(2, 2).apply { generateSamples() }
-        val cut = TestSampler(samplerToCopyFrom)
+        val samplerToCopyFrom = TestSetSampler(2, 2).apply { generateSamples() }
+        val cut = TestSetSampler(samplerToCopyFrom)
 
         assertNotSame(samplerToCopyFrom, cut)
 
@@ -56,13 +56,16 @@ internal class SamplerTest {
     @Test
     internal fun `sample a unit square with default numSamples and numSets`() {
         //Given
-        val cut = TestSampler()
+        val cut = TestSetSampler()
 
         cut.generateSamples()
 
         //When
         val sampleOne = cut.sampleUnitSquare()
-        val sampleTwo = cut.sampleUnitSquare()
+        var sampleTwo = cut.sampleUnitSquare()
+        //changing the set is based on randomness, this can lead to the same set being drawn.
+        //We try our luck once more, though it could fail again.
+        sampleTwo = if (sampleOne == sampleTwo) cut.sampleUnitSquare() else sampleTwo
 
         //Then
         assertNotEquals(sampleOne, sampleTwo)
@@ -74,7 +77,7 @@ internal class SamplerTest {
     @Test
     internal fun `sample a unit square with default more than one numSamples and numSets`() {
         //Given
-        val cut = TestSampler(numSamples = 2)
+        val cut = TestSetSampler(numSamples = 2)
 
         cut.generateSamples()
 
@@ -92,7 +95,7 @@ internal class SamplerTest {
     @Test
     internal fun `sample a unit square twice with only one numSamples and numSets`() {
         //Given
-        val cut = TestSampler(numSamples = 1, numSets = 1)
+        val cut = TestSetSampler(numSamples = 1, numSets = 1)
 
         cut.generateSamples()
 
@@ -105,7 +108,7 @@ internal class SamplerTest {
         assertEquals(Point2D(1.0, 1.0), sampleTwo)
     }
 
-    class ShuffleSampler :
+    class ShuffleAndMapSampler :
         Sampler(numSamples = 10, numSets = 1) {
 
         override fun clone() = this
@@ -123,7 +126,7 @@ internal class SamplerTest {
     @Test
     internal fun `shuffle only X coordinates`() {
         //Given
-        val cut = ShuffleSampler()
+        val cut = ShuffleAndMapSampler()
         cut.generateSamples()
 
         //When
@@ -143,7 +146,7 @@ internal class SamplerTest {
     @Test
     internal fun `shuffle only y coordinates`() {
         //Given
-        val cut = ShuffleSampler()
+        val cut = ShuffleAndMapSampler()
         cut.generateSamples()
 
         //When
