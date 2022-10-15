@@ -1,5 +1,6 @@
 package raytracer.world
 
+import raytracer.samplers.MultiJittered
 import raytracer.samplers.Regular
 import raytracer.samplers.Sampler
 
@@ -34,7 +35,7 @@ class ViewPlane() {
     var numSamples: Int
         get() = _numSamples
         set(value) {
-            sampler = if (value == 1) Regular(1) else Regular(value)
+            sampler = if (value == 1) Regular(numSamples = 1) else MultiJittered(numSamples = value)
             _numSamples = value
         }
 
