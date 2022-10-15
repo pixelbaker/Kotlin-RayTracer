@@ -1,6 +1,7 @@
 package raytracer.samplers
 
 import raytracer.utilities.Point2D
+import raytracer.utilities.Point3D
 import kotlin.test.*
 
 internal class SamplerTest {
@@ -159,24 +160,24 @@ internal class SamplerTest {
         assertEquals(orderBeforeShuffling.toSet(), yCoordinates.toSet(), "Numbers are missing")
     }
 
-    class UnitDiskSampler : Sampler(numSamples = 10, numSets = 1) {
+    class UnitDiskSampler : Sampler(numSamples = 9, numSets = 1) {
 
         override fun clone() = this
 
         override fun generateSamples() {
-            samples.add(Point2D(-.5, 0.5))
-            samples.add(Point2D(0.5, 0.5))
-            samples.add(Point2D(-.5, -.5))
-            samples.add(Point2D(0.5, -.5))
-            samples.add(Point2D(-1.0, 1.0))
-            samples.add(Point2D(1.0, 1.0))
-            samples.add(Point2D(-1.0, -1.0))
-            samples.add(Point2D(1.0, -1.0))
-            samples.add(Point2D(0.0, 0.0))
-            samples.add(Point2D(1.0, 0.5))
+            samples.add(Point2D(x = 0.16666666666666666, y = 0.16666666666666666))
+            samples.add(Point2D(x = 0.5, y = 0.16666666666666666))
+            samples.add(Point2D(x = 0.8333333333333334, y = 0.16666666666666666))
+            samples.add(Point2D(x = 0.16666666666666666, y = 0.5))
+            samples.add(Point2D(x = 0.5, y = 0.5))
+            samples.add(Point2D(x = 0.8333333333333334, y = 0.5))
+            samples.add(Point2D(x = 0.16666666666666666, y = 0.8333333333333334))
+            samples.add(Point2D(x = 0.5, y = 0.8333333333333334))
+            samples.add(Point2D(x = 0.8333333333333334, y = 0.8333333333333334))
         }
 
         fun _mapSamplesToUnitDisk() = mapSamplesToUnitDisk()
+        fun _mapSamplesToHemisphere(exp: Double) = mapSamplesToHemisphere(exp)
     }
 
     @Test
@@ -192,16 +193,42 @@ internal class SamplerTest {
         val samples = (1..cut.numSamples).map { cut.sampleUnitDisk() }
 
         val expected = listOf(
-            Point2D(x = -2.8977774788672046, y = 0.7764571353075631),
-            Point2D(x = -2.0, y = 2.4492935982947064E-16),
-            Point2D(x = -0.7764571353075609, y = 2.897777478867205),
+            Point2D(x = -0.6666666666666667, y = 8.164311994315689E-17),
+            Point2D(x = -0.4714045207910317, y = 0.4714045207910318),
+            Point2D(x = -0.4714045207910316, y = 0.47140452079103184),
             Point2D(x = 0.0, y = 0.0),
-            Point2D(x = 0.7071067811865476, y = 0.7071067811865475),
-            Point2D(x = 0.7071067811865477, y = 0.7071067811865475),
-            Point2D(x = 1.0, y = 0.0),
-            Point2D(x = 1.4142135623730954, y = 1.414213562373095),
-            Point2D(x = 2.121320343559643, y = 2.1213203435596424),
-            Point2D(x = 3.6739403974420594E-16, y = 2.0),
+            Point2D(x = 4.0821559971578444E-17, y = 0.6666666666666667),
+            Point2D(x = 1.2246467991473532E-16, y = 0.6666666666666667),
+            Point2D(x = 0.47140452079103184, y = 0.4714045207910317),
+            Point2D(x = 0.4714045207910318, y = 0.4714045207910317),
+            Point2D(x = 0.6666666666666667, y = 0.0),
+        )
+        assertEquals(expected.size, samples.size)
+        expected.forEach { assertContains(samples, it, "$it missing") }
+    }
+
+    @Test
+    internal fun `map samples to hemisphere`() {
+        //Given
+        val cut = UnitDiskSampler()
+        cut.generateSamples()
+
+        //When
+        cut._mapSamplesToHemisphere(1.0)
+
+        //Then
+        val samples = (1..cut.numSamples).map { cut.sampleHemisphere() }
+
+        val expected = listOf(
+            Point3D(x = -0.9128709291752769, y = 1.117944461449173E-16, z = 0.40824829046386296),
+            Point3D(x = -0.7071067811865475, y = 8.659560562354932E-17, z = 0.7071067811865476),
+            Point3D(x = -0.40824829046386296, y = 4.999599621739487E-17, z = 0.9128709291752769),
+            Point3D(x = 0.20412414523193154, y = -0.3535533905932737, z = 0.9128709291752769),
+            Point3D(x = 0.20412414523193154, y = 0.3535533905932737, z = 0.9128709291752769),
+            Point3D(x = 0.3535533905932738, y = -0.6123724356957945, z = 0.7071067811865476),
+            Point3D(x = 0.3535533905932738, y = 0.6123724356957945, z = 0.7071067811865476),
+            Point3D(x = 0.45643546458763856, y = 0.7905694150420949, z = 0.40824829046386296),
+            Point3D(x = 0.45643546458763856, y = -0.7905694150420949, z = 0.40824829046386296),
         )
         assertEquals(expected.size, samples.size)
         expected.forEach { assertContains(samples, it) }

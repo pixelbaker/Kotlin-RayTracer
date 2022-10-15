@@ -18,13 +18,13 @@ class Regular : Sampler {
     override fun clone(): Sampler = Regular(this)
 
     override fun generateSamples() {
-        val numSamples = sqrt(numSamples.toDouble()).toInt()
+        val numSamplesSqrted = sqrt(numSamples.toDouble()).toInt()
 
         for (j in 0 until numSets) {
-            for (p in 0 until numSamples) {
-                for (q in 0 until numSamples) {
-                    val x = (q + .5) / numSamples
-                    val y = (p + .5) / numSamples
+            for (p in 0 until numSamplesSqrted) {
+                for (q in 0 until numSamplesSqrted) {
+                    val x = (q + .5) / numSamplesSqrted
+                    val y = (p + .5) / numSamplesSqrted
                     samples.add(Point2D(x, y))
                 }
             }

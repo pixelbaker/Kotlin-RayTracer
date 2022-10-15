@@ -166,7 +166,7 @@ abstract class Sampler {
     /**
      * Maps the 2D sample points to 3D points on a unit hemisphere with a cosine power density distribution in the polar angle
      */
-    private fun mapSamplesToHemisphere(exp: Double) {
+    protected fun mapSamplesToHemisphere(exp: Double) {
         for (j in 0 until samples.size) {
             val cosPhi = cos(2.0 * PI * samples[j].x)
             val sinPhi = sin(2.0 * PI * samples[j].x)
