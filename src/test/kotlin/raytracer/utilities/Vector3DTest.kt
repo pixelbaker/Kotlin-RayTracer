@@ -89,15 +89,6 @@ internal class Vector3DTest {
     }
 
     @Test
-    internal fun `compound addition`() {
-        val result = Vector3D(2.0)
-        result += Vector3D(1.0)
-        assertEquals(3.0, result.x)
-        assertEquals(3.0, result.y)
-        assertEquals(3.0, result.z)
-    }
-
-    @Test
     internal fun `subtraction of two vectors`() {
         val vector = Vector3D(3.0) - Vector3D(2.0)
         assertEquals(1.0, vector.x)

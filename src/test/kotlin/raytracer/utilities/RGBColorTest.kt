@@ -36,18 +36,9 @@ internal class RGBColorTest {
     }
 
     @Test
-    internal fun `compound addition`() {
-        val result = RGBColor(2.0)
+    internal fun `addition by another color`() {
+        var result = RGBColor(2.0)
         result += RGBColor(1.0)
-        assertEquals(3.0, result.r)
-        assertEquals(3.0, result.g)
-        assertEquals(3.0, result.b)
-    }
-
-    @Test
-    internal fun `compound multiplication by a double`() {
-        val result = RGBColor(1.0)
-        result *= 3.0
         assertEquals(3.0, result.r)
         assertEquals(3.0, result.g)
         assertEquals(3.0, result.b)

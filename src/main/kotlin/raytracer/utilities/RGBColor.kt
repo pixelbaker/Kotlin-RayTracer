@@ -21,17 +21,7 @@ data class RGBColor(
 
     constructor(c: RGBColor) : this(c.r, c.g, c.b)
 
-    operator fun plusAssign(c: RGBColor) {
-        r += c.r
-        g += c.g
-        b += c.b
-    }
-
-    operator fun timesAssign(a: Double) {
-        r *= a
-        g *= a
-        b *= a
-    }
+    operator fun plus(c: RGBColor) = RGBColor(r + c.r, g + c.g, b + c.b)
 
     operator fun div(a: Double) = RGBColor(r / a, g / a, b / a)
 

@@ -69,15 +69,6 @@ internal class NormalTest {
     }
 
     @Test
-    internal fun `compound addition`() {
-        val result = Normal(2.0)
-        result += Normal(1.0)
-        assertEquals(3.0, result.x)
-        assertEquals(3.0, result.y)
-        assertEquals(3.0, result.z)
-    }
-
-    @Test
     internal fun `dot product with a vector on the right`() {
         val dotProduct: Double = Normal(1.0) * Vector3D(1.0)
         assertEquals(3.0, dotProduct)

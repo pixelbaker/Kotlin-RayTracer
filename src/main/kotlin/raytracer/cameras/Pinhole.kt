@@ -32,7 +32,7 @@ class Pinhole : Camera {
 
         for (row in 0 until viewPlane.vres) {
             for (column in 0 until viewPlane.hres) {
-                val radiance = black()
+                var radiance = black()
 
                 repeat(viewPlane.numSamples) {
                     val samplePoint = viewPlane.sampler.sampleUnitSquare()

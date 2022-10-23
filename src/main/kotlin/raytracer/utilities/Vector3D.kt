@@ -26,12 +26,6 @@ data class Vector3D(
 
     operator fun plus(v: Vector3D) = Vector3D(x + v.x, y + v.y, z + v.z)
 
-    operator fun plusAssign(v: Vector3D) {
-        x += v.x
-        y += v.y
-        z += v.z
-    }
-
     operator fun minus(v: Vector3D) = Vector3D(x - v.x, y - v.y, z - v.z)
 
     /**
@@ -41,9 +35,9 @@ data class Vector3D(
      */
     operator fun rem(v: Vector3D) = Vector3D(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x)
 
-    fun lengthSquared() = x * x + y * y + z * z
+    fun lengthSquared(): Double = x * x + y * y + z * z
 
-    fun length() = sqrt(lengthSquared())
+    fun length(): Double = sqrt(lengthSquared())
 
     fun normalize() {
         val length = sqrt(x * x + y * y + z * z)

@@ -36,7 +36,7 @@ class Matte(
 
         val wo = -shadingRecord.ray.direction
         val worldAmbientRadiance = world.ambient.getRadiance(shadingRecord)
-        val radiance = ambient.rho(shadingRecord, wo) * worldAmbientRadiance
+        var radiance = ambient.rho(shadingRecord, wo) * worldAmbientRadiance
 
         for (light in world.lights) {
             val wi = light.getDirection(shadingRecord)

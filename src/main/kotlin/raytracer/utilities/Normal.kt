@@ -17,18 +17,12 @@ data class Normal(
 
     operator fun plus(n: Normal) = Normal(x + n.x, y + n.y, z + n.z)
 
-    operator fun plusAssign(n: Normal) {
-        x += n.x
-        y += n.y
-        z += n.z
-    }
-
     /**
      * Dot product with a vector on the right
      */
-    operator fun times(v: Vector3D) = x * v.x + y * v.y + z * v.z
-    
-    operator fun times(a: Double) = Normal(x * a, y * a, z * a)
+    operator fun times(v: Vector3D): Double = x * v.x + y * v.y + z * v.z
+
+    operator fun times(a: Double): Normal = Normal(x * a, y * a, z * a)
 
     /**
      * Convert normal to a unit normal
