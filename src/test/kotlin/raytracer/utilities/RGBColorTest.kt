@@ -62,18 +62,8 @@ internal class RGBColorTest {
     }
 
     @Test
-    internal fun `compound division by a double`() {
-        val result = RGBColor(3.0)
-        result /= 3.0
-        assertEquals(1.0, result.r)
-        assertEquals(1.0, result.g)
-        assertEquals(1.0, result.b)
-    }
-
-    @Test
-    internal fun `compound division by an Integer`() {
-        val result = RGBColor(3.0)
-        result /= 3
+    internal fun `division by an Integer`() {
+        val result = RGBColor(3.0) / 3
         assertEquals(1.0, result.r)
         assertEquals(1.0, result.g)
         assertEquals(1.0, result.b)

@@ -25,13 +25,7 @@ data class RGBColor(
 
     operator fun div(a: Double) = RGBColor(r / a, g / a, b / a)
 
-    operator fun divAssign(a: Int) = divAssign(a.toDouble())
-
-    operator fun divAssign(a: Double) {
-        r /= a
-        g /= a
-        b /= a
-    }
+    operator fun div(a: Int) = div(a.toDouble())
 
     operator fun times(c: RGBColor) = RGBColor(r * c.r, g * c.g, b * c.b)
 
