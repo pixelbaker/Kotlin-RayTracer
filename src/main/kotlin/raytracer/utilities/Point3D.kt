@@ -21,12 +21,12 @@ data class Point3D(
 
     operator fun times(a: Double) = Point3D(x * a, y * a, z * a)
 
-    fun d_squared(p: Point3D) =
+    fun d_squared(p: Point3D): Double =
         (x - p.x) * (x - p.x) +
                 (y - p.y) * (y - p.y) +
                 (z - p.z) * (z - p.z)
 
-    fun distance(p: Point3D) = sqrt(
+    fun distance(p: Point3D): Double = sqrt(
         (x - p.x) * (x - p.x) +
                 (y - p.y) * (y - p.y) +
                 (z - p.z) * (z - p.z)

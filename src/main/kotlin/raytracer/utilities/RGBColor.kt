@@ -3,11 +3,10 @@ package raytracer.utilities
 import kotlin.math.max
 import kotlin.math.pow
 
-val black = { RGBColor(0.0) }
-val white = { RGBColor(1.0) }
-val red = { RGBColor(1.0, 0.0, 0.0) }
-val green = { RGBColor(0.0, 1.0, 0.0) }
-
+fun black() = RGBColor(0.0)
+fun white() = RGBColor(1.0)
+fun red() = RGBColor(1.0, 0.0, 0.0)
+fun green() = RGBColor(0.0, 1.0, 0.0)
 
 data class RGBColor(
     var r: Double = 0.0,
@@ -31,7 +30,7 @@ data class RGBColor(
 
     operator fun times(scale: Double) = RGBColor(r * scale, g * scale, b * scale)
 
-    fun average() = (1.0 / 3.0) * (r + g + b)
+    fun average(): Double = (1.0 / 3.0) * (r + g + b)
 
     fun powc(p: Double) = RGBColor(r.pow(p), g.pow(p), b.pow(p))
 
