@@ -24,13 +24,13 @@ data class Normal(
 
     operator fun times(a: Double): Normal = Normal(x * a, y * a, z * a)
 
+    operator fun div(a: Double) = Normal(x / a, y / a, z / a)
+
     /**
      * Convert normal to a unit normal
      */
-    fun normalize() {
+    fun normalize(): Normal {
         val length = sqrt(x * x + y * y + z * z)
-        x /= length
-        y /= length
-        z /= length
+        return div(length)
     }
 }

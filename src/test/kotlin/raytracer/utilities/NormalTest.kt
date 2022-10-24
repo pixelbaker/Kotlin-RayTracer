@@ -61,6 +61,14 @@ internal class NormalTest {
     }
 
     @Test
+    internal fun `division by a double on the right`() {
+        val normal = Normal(1.0) / 2.0
+        assertEquals(.5, normal.x)
+        assertEquals(.5, normal.y)
+        assertEquals(.5, normal.z)
+    }
+
+    @Test
     internal fun `addition of two normals`() {
         val normal = Normal(1.0) + Normal(1.0)
         assertEquals(2.0, normal.x)
@@ -76,8 +84,7 @@ internal class NormalTest {
 
     @Test
     internal fun `normalize normal`() {
-        val normal = Normal(1.0)
-        normal.normalize()
+        val normal = Normal(1.0).normalize()
         assertEquals(0.5773, normal.x, .0001)
         assertEquals(0.5773, normal.y, .0001)
         assertEquals(0.5773, normal.z, .0001)
